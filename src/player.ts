@@ -27,21 +27,21 @@ export class Player extends Actor {
     super.update(engine, delta);
 
     if (this.movingTo) {
-      this.movingTo = this.movingTo.scale(0.5);
-      this.pos = this.pos.add(this.movingTo);
-      if (this.movingTo.magnitude() < 0.01) {
-        this.pos = this.pos.add(this.movingTo);
+      const speed = this.pos.sub(this.movingTo).negate().scale(0.5);
+      this.pos = this.pos.add(speed);
+      if (speed.magnitude() < 0.05) {
+        this.pos = this.pos.add(speed);
         this.movingTo = undefined;
       }
     } else {
       if (engine.input.keyboard.wasPressed(Input.Keys.Up)) {
-        this.movingTo = new Vector(0, -tileSize);
+        this.movingTo = this.pos.add(new Vector(0, -tileSize));
       } else if (engine.input.keyboard.wasPressed(Input.Keys.Down)) {
-        this.movingTo = new Vector(0, tileSize);
+        this.movingTo = this.pos.add(new Vector(0, tileSize));
       } else if (engine.input.keyboard.wasPressed(Input.Keys.Left)) {
-        this.movingTo = new Vector(-tileSize, 0);
+        this.movingTo = this.pos.add(new Vector(-tileSize, 0));
       } else if (engine.input.keyboard.wasPressed(Input.Keys.Right)) {
-        this.movingTo = new Vector(tileSize, 0);
+        this.movingTo = this.pos.add(new Vector(tileSize, 0));
       }
     }
   }
