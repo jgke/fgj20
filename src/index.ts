@@ -4,6 +4,7 @@ import {Player} from "./player";
 import {Rock} from "./rock";
 import {tileSize} from "./const";
 import {Direction, Direction2Vec} from "./Direction";
+import {maps} from "./maps";
 
 type Tile = "empty" | "object" | "hole";
 
@@ -46,28 +47,22 @@ export class Game extends Engine {
     const gameScene = new Scene(this);
     this.addScene('game', gameScene);
 
-    this.tileMap = new TileMap(0, 0, tileSize, tileSize, 20, 20);
+    const map = maps[0];
+
+    console.log(map[0].length, map.length);
+
+    this.tileMap = new TileMap(0, 0, tileSize, tileSize, map.length, map[0].length);
     this.tileMap.registerSpriteSheet('base',
       new SpriteSheet(this.assets.map, 4, 3, tileSize, tileSize));
 
-    const r = -1;
-
-    const map = [
-      [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
-      [2, 0, 0, 0, 0, 5, 2, 0, 0, 2],
-      [2, 2, r, 2, 0, 4, 2, 0, 0, 2],
-      [2, 0, 0, 0, 0, 2, 2, 0, 0, 2],
-      [2, 5, 2, 2, 4, 2, 2, 0, 0, 2],
-      [2, 2, 2, 0, 2, 2, 2, 0, 0, 2],
-      [2, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-      [2, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-      [2, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-      [2, 2, 2, 2, 2, 2, 2, 2, 2, 2]
-    ];
+    let playerPos = undefined;
 
     for (let y = 0; y < map.length; y++) {
       for (let x = 0; x < map[0].length; x++) {
-        if(map[y][x] === -1) {
+        if(map[y][x] < 0) {
+          if(map[y][x] === -2) {
+            playerPos = new Vector(x, y);
+          }
           continue;
         }
         const ts = new TileSprite('base', map[y][x]);
@@ -82,7 +77,7 @@ export class Game extends Engine {
     }
     gameScene.add(this.tileMap);
 
-    this.player = new Player(new Vector(1, 1), this.assets.player);
+    this.player = new Player(new Vector(playerPos.x, playerPos.y), this.assets.player);
     for (let y = 0; y < map.length; y++) {
       for (let x = 0; x < map[0].length; x++) {
         if (map[y][x] === -1) {
