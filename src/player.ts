@@ -7,8 +7,6 @@ import {tileSize} from "./const";
 
 export class Player extends Actor {
   texture: Texture;
-  spriteSheet: SpriteSheet;
-  lastDirectionPressed?: Direction;
   previousDirection: Vector;
   position = new Vector(0, 0);
 
@@ -16,20 +14,15 @@ export class Player extends Actor {
     initPos: Vector,
     texture: Texture,
   ) {
-    super(initPos.x * tileSize, initPos.y * tileSize, 40, 40);
+    super(initPos.x * tileSize + tileSize/2, initPos.y * tileSize + tileSize/2, tileSize, tileSize);
 
     this.previousDirection = Vector.Right;
     this.texture = texture;
-    this.collisionType = CollisionType.Active;
+    this.body.collider.type = CollisionType.Active;
   }
 
   onInitialize(game: Engine) {
-    this.spriteSheet = new SpriteSheet(this.texture, 1, 1, 32, 32);
-    this.scale = new Vector(2, 2);
-  }
-
-  draw(ctx: CanvasRenderingContext2D, delta: number) {
-    super.draw(ctx, delta);
+    this.addDrawing(this.texture);
   }
 
   update(engine: Game, delta: number) {
@@ -44,5 +37,7 @@ export class Player extends Actor {
     } else if (engine.input.keyboard.wasPressed(Input.Keys.Right)) {
       this.position.x += 1;
     }
+
+    this.pos = this.position.scale(tileSize).add(new Vector(tileSize/2, tileSize/2));
   }
 }

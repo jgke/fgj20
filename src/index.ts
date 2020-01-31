@@ -33,7 +33,7 @@ export class Game extends Engine {
     this.addScene('game', gameScene);
 
     this.player = new Player(
-      new Vector(0, 0),
+      new Vector(5, 5),
       this.assets.player
     );
     gameScene.add(this.player);
