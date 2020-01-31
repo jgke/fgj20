@@ -50,21 +50,26 @@ export class Game extends Engine {
     this.tileMap.registerSpriteSheet('base',
       new SpriteSheet(this.assets.map, 4, 3, tileSize, tileSize));
 
+    const r = -1;
+
     const map = [
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 2, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 2, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 2, 0, 5, 0],
-      [0, 0, 0, 0, 2, 2, 2, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 5, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 4, 0, 4, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+      [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+      [2, 0, 0, 0, 0, 5, 2, 0, 0, 2],
+      [2, 2, r, 2, 0, 4, 2, 0, 0, 2],
+      [2, 0, 0, 0, 0, 2, 2, 0, 0, 2],
+      [2, 5, 2, 2, 4, 2, 2, 0, 0, 2],
+      [2, 2, 2, 0, 2, 2, 2, 0, 0, 2],
+      [2, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+      [2, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+      [2, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+      [2, 2, 2, 2, 2, 2, 2, 2, 2, 2]
     ];
 
     for (let y = 0; y < map.length; y++) {
       for (let x = 0; x < map[0].length; x++) {
+        if(map[y][x] === -1) {
+          continue;
+        }
         const ts = new TileSprite('base', map[y][x]);
         // add to cell
         this.getCell(x, y).pushSprite(ts);
@@ -77,12 +82,17 @@ export class Game extends Engine {
     }
     gameScene.add(this.tileMap);
 
-    this.player = new Player(new Vector(4, 4), this.assets.player);
-    for (let i = 0; i < 5; i++) {
-      const rock = new Rock(new Vector(i + 3, 10), this.assets.rock);
-      this.rocks.push(rock);
-      gameScene.add(rock);
+    this.player = new Player(new Vector(1, 1), this.assets.player);
+    for (let y = 0; y < map.length; y++) {
+      for (let x = 0; x < map[0].length; x++) {
+        if (map[y][x] === -1) {
+          const rock = new Rock(new Vector(x, y), this.assets.rock);
+          this.rocks.push(rock);
+          gameScene.add(rock);
+        }
+      }
     }
+
     gameScene.add(this.player);
     this.goToScene('game');
   }
