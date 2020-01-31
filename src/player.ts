@@ -1,20 +1,18 @@
-import {Actor, CollisionType, Engine, EventTypes, Input, Sound, SpriteSheet, Texture, Vector} from 'excalibur';
+import {Actor, CollisionType, Engine, Input, Texture, Vector} from 'excalibur';
 
 import {Game} from './.';
-import {offsetBoundingBox} from './bbox_functions';
-import {Direction, Direction2Vec} from './Direction';
 import {tileSize} from "./const";
 
 export class Player extends Actor {
   texture: Texture;
   previousDirection: Vector;
-  position = new Vector(0, 0);
+  movingTo?: Vector = undefined;
 
   constructor(
     initPos: Vector,
     texture: Texture,
   ) {
-    super(initPos.x * tileSize + tileSize/2, initPos.y * tileSize + tileSize/2, tileSize, tileSize);
+    super(initPos.x * tileSize + tileSize / 2, initPos.y * tileSize + tileSize / 2, tileSize, tileSize);
 
     this.previousDirection = Vector.Right;
     this.texture = texture;
@@ -28,16 +26,23 @@ export class Player extends Actor {
   update(engine: Game, delta: number) {
     super.update(engine, delta);
 
-    if (engine.input.keyboard.wasPressed(Input.Keys.Up)) {
-      this.position.y -= 1;
-    } else if (engine.input.keyboard.wasPressed(Input.Keys.Down)) {
-      this.position.y += 1;
-    } else if (engine.input.keyboard.wasPressed(Input.Keys.Left)) {
-      this.position.x -= 1;
-    } else if (engine.input.keyboard.wasPressed(Input.Keys.Right)) {
-      this.position.x += 1;
+    if (this.movingTo) {
+      this.movingTo = this.movingTo.scale(0.5);
+      this.pos = this.pos.add(this.movingTo);
+      if (this.movingTo.magnitude() < 0.01) {
+        this.pos = this.pos.add(this.movingTo);
+        this.movingTo = undefined;
+      }
+    } else {
+      if (engine.input.keyboard.wasPressed(Input.Keys.Up)) {
+        this.movingTo = new Vector(0, -tileSize);
+      } else if (engine.input.keyboard.wasPressed(Input.Keys.Down)) {
+        this.movingTo = new Vector(0, tileSize);
+      } else if (engine.input.keyboard.wasPressed(Input.Keys.Left)) {
+        this.movingTo = new Vector(-tileSize, 0);
+      } else if (engine.input.keyboard.wasPressed(Input.Keys.Right)) {
+        this.movingTo = new Vector(tileSize, 0);
+      }
     }
-
-    this.pos = this.position.scale(tileSize).add(new Vector(tileSize/2, tileSize/2));
   }
 }
