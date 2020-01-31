@@ -1,7 +1,6 @@
 import {Actor, CollisionType, Engine, EventTypes, Input, Sound, SpriteSheet, Texture, Vector} from 'excalibur';
 
 import {Game} from './.';
-import {offsetBoundingBox} from './bbox_functions';
 import {Direction, Direction2Vec} from './Direction';
 import {tileSize} from "./const";
 

@@ -7,6 +7,7 @@ export class Player extends Actor {
   texture: Texture;
   previousDirection: Vector;
   movingTo?: Vector = undefined;
+  cabling?: number;
 
   constructor(
     initPos: Vector,
@@ -34,13 +35,13 @@ export class Player extends Actor {
       }
     } else {
       if (engine.input.keyboard.wasPressed(Input.Keys.Up)) {
-        this.movingTo = engine.playerMoves(this.pos, "Up");
+        this.movingTo = engine.playerMoves(this.pos, "Up", this.cabling);
       } else if (engine.input.keyboard.wasPressed(Input.Keys.Down)) {
-        this.movingTo = engine.playerMoves(this.pos, "Down");
+        this.movingTo = engine.playerMoves(this.pos, "Down", this.cabling);
       } else if (engine.input.keyboard.wasPressed(Input.Keys.Left)) {
-        this.movingTo = engine.playerMoves(this.pos, "Left");
+        this.movingTo = engine.playerMoves(this.pos, "Left", this.cabling);
       } else if (engine.input.keyboard.wasPressed(Input.Keys.Right)) {
-        this.movingTo = engine.playerMoves(this.pos, "Right");
+        this.movingTo = engine.playerMoves(this.pos, "Right", this.cabling);
       }
     }
   }

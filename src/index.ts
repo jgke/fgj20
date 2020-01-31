@@ -1,4 +1,4 @@
-import {Engine, Scene, SpriteSheet, Texture, TileMap, TileSprite, Vector} from 'excalibur';
+import {Cell, Engine, Scene, SpriteSheet, Texture, TileMap, TileSprite, Vector} from 'excalibur';
 import {Splash} from "./loader";
 import {Player} from "./player";
 import {Rock} from "./rock";
@@ -24,7 +24,7 @@ export class Game extends Engine {
   static width = 800;
   static height = 600;
   player: Player = undefined as any;
-  rocks: Rock[] = []
+  rocks: Rock[] = [];
   tileMap: TileMap;
 
   assets = {
@@ -48,18 +48,18 @@ export class Game extends Engine {
 
     this.tileMap = new TileMap(0, 0, tileSize, tileSize, 20, 20);
     this.tileMap.registerSpriteSheet('base',
-      new SpriteSheet(this.assets.map, 4, 1, tileSize, tileSize));
+      new SpriteSheet(this.assets.map, 4, 3, tileSize, tileSize));
 
     const map = [
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 2, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 2, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 2, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 2, 0, 5, 0],
       [0, 0, 0, 0, 2, 2, 2, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 5, 0],
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 4, 0, 4, 0],
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     ];
 
@@ -67,8 +67,12 @@ export class Game extends Engine {
       for (let x = 0; x < map[0].length; x++) {
         const ts = new TileSprite('base', map[y][x]);
         // add to cell
-        this.tileMap.getCell(x, y).pushSprite(ts);
-        this.tileMap.getCell(x, y).solid = map[y][x] === 2;
+        this.getCell(x, y).pushSprite(ts);
+        this.getCell(x, y).solid = map[y][x] === 2;
+        this.getCell(x, y).cable = undefined;
+        if (map[y][x] >= 4 && map[y][x] < 8) {
+          this.getCell(x, y).cableOrigin = map[y][x];
+        }
       }
     }
     gameScene.add(this.tileMap);
@@ -83,6 +87,10 @@ export class Game extends Engine {
     this.goToScene('game');
   }
 
+  public getCell(x, y): Cell & { cable?: number, cableOrigin?: number } {
+    return this.tileMap.getCell(x, y)
+  }
+
   public getRockAt(pos: Vector): Rock | undefined {
     for (let rock of this.rocks) {
       if (pos.equals(tilePosition(rock.pos))) {
@@ -92,22 +100,57 @@ export class Game extends Engine {
     return undefined;
   }
 
-  public playerMoves(from: Vector, to: Direction) {
+  public clearCabling(color: number) {
+    for (let y = 0; y < this.tileMap.rows; y++) {
+      for (let x = 0; x < this.tileMap.cols; x++) {
+        if (this.getCell(x, y).cable === color) {
+          this.setCabling(x, y, undefined);
+        }
+      }
+    }
+  }
+
+  public setCabling(x: number, y: number, cabling?: number) {
+    this.getCell(x, y).clearSprites();
+    if (cabling) {
+      this.getCell(x, y).cable = cabling;
+      this.getCell(x, y).pushSprite(new TileSprite('base', cabling + 4));
+    } else {
+      this.getCell(x, y).cable = undefined;
+      this.getCell(x, y).pushSprite(new TileSprite('base', 0));
+    }
+  }
+
+  public playerMoves(from: Vector, to: Direction, cabling?: number) {
     const cur = tilePosition(from);
     let destination: Vector = cur.add(Direction2Vec(to));
+    const dx = destination.x;
+    const dy = destination.y;
 
-    if (this.tileMap.getCell(destination.x, destination.y).solid) {
+    if (this.getCell(dx, dy).solid) {
       return undefined;
     }
 
     const destRock = this.getRockAt(destination);
     const behind = destination.add(Direction2Vec(to));
-    const behindClear = !(this.getRockAt(behind) || this.tileMap.getCell(behind.x, behind.y).solid);
+    const behindClear = !(this.getRockAt(behind) || this.getCell(behind.x, behind.y).solid);
 
-    if(destRock && behindClear) {
+    if (destRock && behindClear) {
       destRock.move(to);
-    } else if(destRock) {
+    } else if (destRock) {
       return undefined;
+    }
+
+    if (cabling && !this.getCell(dx, dy).cableOrigin && !this.getCell(dx, dy).cable) {
+      this.setCabling(dx, dy, cabling);
+    } else if (cabling && this.getCell(dx, dy).cableOrigin === cabling) {
+      this.player.cabling = undefined;
+    } else if (cabling && this.getCell(dx, dy).cable) {
+      this.clearCabling(cabling);
+      this.player.cabling = undefined;
+    } else if (this.getCell(dx, dy).cableOrigin) {
+      this.clearCabling(this.getCell(dx, dy).cableOrigin);
+      this.player.cabling = this.getCell(dx, dy).cableOrigin;
     }
 
     return destination.scale(tileSize).add(new Vector(tileSize / 2, tileSize / 2));
