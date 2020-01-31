@@ -1,4 +1,4 @@
-import {Actor, CollisionType, Engine, Input, Texture, Vector} from 'excalibur';
+import {Actor, CollisionType, Engine, Input, Texture, TileMap, Vector} from 'excalibur';
 
 import {Game} from './.';
 import {tileSize} from "./const";
@@ -16,7 +16,6 @@ export class Player extends Actor {
 
     this.previousDirection = Vector.Right;
     this.texture = texture;
-    this.body.collider.type = CollisionType.Active;
   }
 
   onInitialize(game: Engine) {
@@ -35,13 +34,13 @@ export class Player extends Actor {
       }
     } else {
       if (engine.input.keyboard.wasPressed(Input.Keys.Up)) {
-        this.movingTo = this.pos.add(new Vector(0, -tileSize));
+        this.movingTo = engine.playerMoves(this.pos, "Up");
       } else if (engine.input.keyboard.wasPressed(Input.Keys.Down)) {
-        this.movingTo = this.pos.add(new Vector(0, tileSize));
+        this.movingTo = engine.playerMoves(this.pos, "Down");
       } else if (engine.input.keyboard.wasPressed(Input.Keys.Left)) {
-        this.movingTo = this.pos.add(new Vector(-tileSize, 0));
+        this.movingTo = engine.playerMoves(this.pos, "Left");
       } else if (engine.input.keyboard.wasPressed(Input.Keys.Right)) {
-        this.movingTo = this.pos.add(new Vector(tileSize, 0));
+        this.movingTo = engine.playerMoves(this.pos, "Right");
       }
     }
   }
