@@ -121,7 +121,10 @@ export class Game extends Engine {
     }
   }
 
-  public playerMoves(from: Vector, to: Direction, cabling?: number) {
+  public playerMoves(from: Vector, to: Direction) {
+    const cabling = this.player.cabling;
+    const cableOrigin = this.player.cableOrigin;
+
     const cur = tilePosition(from);
     let destination: Vector = cur.add(Direction2Vec(to));
     const dx = destination.x;
@@ -143,14 +146,18 @@ export class Game extends Engine {
 
     if (cabling && !this.getCell(dx, dy).cableOrigin && !this.getCell(dx, dy).cable) {
       this.setCabling(dx, dy, cabling);
-    } else if (cabling && this.getCell(dx, dy).cableOrigin === cabling) {
+    } else if (cabling && this.getCell(dx, dy).cableOrigin === cabling && !cableOrigin.equals(destination)) {
       this.player.cabling = undefined;
     } else if (cabling && this.getCell(dx, dy).cable) {
       this.clearCabling(cabling);
       this.player.cabling = undefined;
     } else if (this.getCell(dx, dy).cableOrigin) {
+      if(cabling) {
+        this.clearCabling(cabling);
+      }
       this.clearCabling(this.getCell(dx, dy).cableOrigin);
       this.player.cabling = this.getCell(dx, dy).cableOrigin;
+      this.player.cableOrigin = new Vector(dx, dy);
     }
 
     return destination.scale(tileSize).add(new Vector(tileSize / 2, tileSize / 2));

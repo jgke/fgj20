@@ -8,6 +8,7 @@ export class Player extends Actor {
   previousDirection: Vector;
   movingTo?: Vector = undefined;
   cabling?: number;
+  cableOrigin?: Vector;
 
   constructor(
     initPos: Vector,
@@ -35,13 +36,13 @@ export class Player extends Actor {
       }
     } else {
       if (engine.input.keyboard.wasPressed(Input.Keys.Up)) {
-        this.movingTo = engine.playerMoves(this.pos, "Up", this.cabling);
+        this.movingTo = engine.playerMoves(this.pos, "Up");
       } else if (engine.input.keyboard.wasPressed(Input.Keys.Down)) {
-        this.movingTo = engine.playerMoves(this.pos, "Down", this.cabling);
+        this.movingTo = engine.playerMoves(this.pos, "Down");
       } else if (engine.input.keyboard.wasPressed(Input.Keys.Left)) {
-        this.movingTo = engine.playerMoves(this.pos, "Left", this.cabling);
+        this.movingTo = engine.playerMoves(this.pos, "Left");
       } else if (engine.input.keyboard.wasPressed(Input.Keys.Right)) {
-        this.movingTo = engine.playerMoves(this.pos, "Right", this.cabling);
+        this.movingTo = engine.playerMoves(this.pos, "Right");
       }
     }
   }
