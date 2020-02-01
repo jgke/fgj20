@@ -6,7 +6,7 @@ export class Splash extends Loader {
     super(loadables);
     this.logoWidth = 600;
     this.logoHeight = 600;
-    this.backgroundColor = 'rgb(77, 77, 77)';
+    this.backgroundColor = '#55555500';
   }
 
   showPlayButton(): Promise<any> {

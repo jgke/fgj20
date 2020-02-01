@@ -63,7 +63,7 @@ export class Game extends Engine {
 
   constructor() {
     super({
-      backgroundColor: Color.fromHex("333333"),
+      backgroundColor: Color.fromHex("55555500"),
       width: Game.width,
       height: Game.height
     });
@@ -85,6 +85,7 @@ export class Game extends Engine {
     const key = `game-${this.currentMap}`;
     const gameScene = new Scene(this);
     this.addScene(key, gameScene);
+    document.getElementById('levelname').textContent = `${this.currentMap} ${maps[this.currentMap][1]}`;
 
     this.currentColors = {};
     this.targetColors = [];
@@ -243,7 +244,8 @@ export class Game extends Engine {
     this.addScene('mainmenu', new Mainmenu(this));
 
     return super.start(loader)
-      .then(() => this.goToScene('mainmenu'));
+  //    .then(() => this.goToScene('mainmenu'));
+      .then(() => this.postInit());
   }
 
   onPreUpdate(engine: Game, delta: number) {

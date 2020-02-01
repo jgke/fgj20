@@ -81,6 +81,7 @@ export class Mainmenu extends Scene {
 
   public onActivate(_oldScene: Scene, _newScene: Scene): void {
     super.onActivate(_oldScene, _newScene);
+    document.getElementById('levelname').textContent = "";
 
     this.toMain();
 

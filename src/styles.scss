@@ -12,7 +12,7 @@ body {
   margin: 0;
 
   canvas {
-    top: 0;
+    top: 50px;
     left: 0;
     position: absolute;
   }
@@ -24,10 +24,18 @@ body {
   }
 
   #statusbar {
-    display: none;
-    background-color: white;
+    position: absolute;
+    top: 0;
+    left: 0;
     padding: 20px;
     width: 800px;
+    span {
+      font-size: 20px;
+      color: white;
+      font-weight: bold;
+      display: block;
+      text-align: center;
+    }
   }
 
   #ui_container {
