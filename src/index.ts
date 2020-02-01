@@ -84,8 +84,6 @@ export class Game extends Engine {
 
     const map = addBorder(maps[this.currentMap]);
 
-    console.log(map);
-
     this.cables = new TileMap(0, 0, 2 * tileSize, 2 * tileSize, map.length, map[0].length);
     this.cables.registerSpriteSheet('base',
       new SpriteSheet(this.assets.map, 4, 3, 2 * tileSize, 2 * tileSize));
@@ -111,7 +109,6 @@ export class Game extends Engine {
         }
       }
     }
-    gameScene.add(this.cables);
 
     const tileMap = getTiles(map.map(row => row.map(cell => cell == 2)));
     this.tileMap = new TileMap(0, 0, tileSize, tileSize, tileMap.length, tileMap[0].length);
@@ -124,7 +121,9 @@ export class Game extends Engine {
         this.tileMap.getCell(x, y).pushSprite(ts);
       }
     }
+
     gameScene.add(this.tileMap);
+    gameScene.add(this.cables);
 
 
     this.player = new Player(new Vector(playerPos.x, playerPos.y), this.assets.player);
