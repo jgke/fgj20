@@ -5,7 +5,12 @@ body {
   flex-direction: column;
   padding: 30px;
 
-  .game {
+  @media screen and (max-width: 800px) {
+    padding: 0;
+    margin: 0;
+    canvas {
+      width: 100% !important;
+    }
   }
 
   .ui {
