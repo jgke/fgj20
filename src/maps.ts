@@ -49,3 +49,5 @@ export const maps = {
   12: doubleRockTest,
   13: rockOnCableTest
 };
+
+export const mapOrder = Object.keys(maps).sort().reverse();
