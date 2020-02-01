@@ -194,7 +194,6 @@ export class Game extends Engine {
     const dy = destination.y;
 
     if (this.getCell(dx, dy).solid) {
-      console.log("solid");
       return undefined;
     }
 
@@ -205,7 +204,6 @@ export class Game extends Engine {
     if (destRock && behindClear) {
       destRock.move(to);
     } else if (destRock) {
-      console.log("destRock");
       return undefined;
     }
 

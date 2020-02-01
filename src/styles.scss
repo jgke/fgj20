@@ -19,12 +19,25 @@ body {
     height: 30px;
     padding-left: 20px;
 
-    p {
+    button {
+      margin: 30px;
+      display: block;
       padding: 20px;
       background: whitesmoke;
       border-radius: 3px;
       width: 200px;
       font-size: 20px;
+      outline: 0;
+      border: 0;
+    }
+
+    button::-moz-focus-inner {
+      border: 0;
+    }
+
+    button:focus, button:active {
+      background-color: red;
+
     }
   }
 }
