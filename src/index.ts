@@ -6,6 +6,8 @@ import {tileSize} from "./const";
 import {Direction, Direction2Vec} from "./Direction";
 import {mapOrder, maps} from "./maps";
 
+import "./styles.scss"
+
 type Tile = "empty" | "object" | "hole";
 
 interface Level {
