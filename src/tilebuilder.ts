@@ -98,17 +98,17 @@ export function getTiles(tilemap: boolean[][]): number[][] {
   for (let col = 0; col < tmp.length; col++) {
     out[col] = [];
     for (let row = 0; row < tmp[col].length; row++) {
-      const topLeft = (tmp[col - 1] || {[row-1]: 1})[row - 1] ? 1 : 0;
-      const top = (tmp[col - 1] || {[row]: 1})[row] ? 1 : 0;
-      const topRight = (tmp[col - 1] || {[row+1]: 1})[row + 1] ? 1 : 0;
+      const topLeft = (tmp[col - 1] || [])[row - 1] ? 1 : 0;
+      const top = (tmp[col - 1] || [])[row] ? 1 : 0;
+      const topRight = (tmp[col - 1] || [])[row + 1] ? 1 : 0;
 
       const left = tmp[col][row - 1] ? 1 : 0;
       const me = tmp[col][row] ? 1 : 0;
       const right = tmp[col][row + 1] ? 1 : 0;
 
-      const bottomLeft = (tmp[col + 1] || {[row-1]: 1})[row - 1] ? 1 : 0;
-      const bottom = (tmp[col + 1] || {[row]: 1})[row] ? 1 : 0;
-      const bottomRight = (tmp[col + 1] || {[row+1]: 1})[row + 1] ? 1 : 0;
+      const bottomLeft = (tmp[col + 1] || [])[row - 1] ? 1 : 0;
+      const bottom = (tmp[col + 1] || [])[row] ? 1 : 0;
+      const bottomRight = (tmp[col + 1] || [])[row + 1] ? 1 : 0;
       const magic = getMagic(
         topLeft,
         top,

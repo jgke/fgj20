@@ -24,6 +24,21 @@ function tilePosition(pos: Vector) {
   )
 }
 
+function addBorder(map: number[][]): number[][] {
+  const result = [];
+  for (let y = 0; y < map.length; y++) {
+    result.push([]);
+    result[y].push(2);
+    for(let x = 0; x < map[y].length; x++) {
+      result[y].push(map[y][x])
+    }
+    result[y].push(2);
+  }
+  return [Array(map[0].length+2).fill(2)]
+    .concat(result)
+    .concat([Array(map[0].length+2).fill(2)]);
+}
+
 export class Game extends Engine {
   static width = 800;
   static height = 600;
@@ -67,7 +82,9 @@ export class Game extends Engine {
     this.targetColors = [];
     this.rocks = [];
 
-    const map = maps[this.currentMap];
+    const map = addBorder(maps[this.currentMap]);
+
+    console.log(map);
 
     this.cables = new TileMap(0, 0, 2 * tileSize, 2 * tileSize, map.length, map[0].length);
     this.cables.registerSpriteSheet('base',
