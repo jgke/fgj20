@@ -28,6 +28,17 @@ const orderMatters = [
   [0, 0, 2, 2, 2, 2, 2, 0],
 ];
 
+const sokoban1 = [
+  [0, 2, 2, 2, 2, 2, 2, 2, 2],
+  [0, 2, 0, 0, 2, 0, 4, 0, 2],
+  [0, 2, p, r, 0, r, 0, r, 2],
+  [2, 2, 2, 0, 2, r, 0, 0, 2],
+  [2, 0, 2, 2, 0, r, 0, 0, 2],
+  [2, 0, 0, 2, 2, 0, r, r, 2],
+  [2, 0, 4, r, 0, 0, 2, 2, 2],
+  [2, 2, 2, 2, 2, 2, 2, 2, 2],
+];
+
 const doubleRockTest = [
   [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
   [2, 4, p, 0, r, r, 4, 0, 0, 2],
@@ -46,6 +57,7 @@ export const maps = {
   0: helloWorld,
   1: introduction,
   2: orderMatters,
+  3: sokoban1,
   12: doubleRockTest,
   13: rockOnCableTest
 };
