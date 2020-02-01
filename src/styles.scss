@@ -13,9 +13,19 @@ body {
     }
   }
 
-  .ui {
+  #ui {
+    position: absolute;
     width: 800px;
     height: 30px;
-    background-color: whitesmoke;
+    padding-left: 20px;
+
+    p {
+      padding: 20px;
+      background: whitesmoke;
+      border-radius: 3px;
+      width: 200px;
+      font-size: 20px;
+    }
   }
 }
+

@@ -9,6 +9,7 @@ import {mapOrder, maps} from "./maps";
 import "./styles.scss"
 import {getTiles} from "./tilebuilder";
 import {MyCamera} from "./camera";
+import {Mainmenu} from "./mainmenu";
 
 type Tile = "empty" | "object" | "hole";
 
@@ -231,13 +232,15 @@ export class Game extends Engine {
     return destination.scale(2 * tileSize).add(new Vector(tileSize, tileSize));
   }
 
-
   public start() {
     const loader = new Splash([
       ...Object.keys(this.assets).map(textureName => this.assets[textureName])
     ]);
 
-    return super.start(loader).then(() => this.postInit());
+    this.addScene('mainmenu', new Mainmenu(this));
+
+    return super.start(loader)
+      .then(() => this.goToScene('mainmenu'));
   }
 
   onPreUpdate(engine: Game, delta: number) {
