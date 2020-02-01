@@ -108,7 +108,7 @@ export class Game extends Engine {
           if (map[y][x] === -2) {
             playerPos = new Vector(x, y);
           }
-          if(map[y][x] === -3) {
+          if (map[y][x] === -3) {
             this.rockTargets.push(new Vector(x, y));
             map[y][x] = 3;
           } else {
@@ -219,7 +219,7 @@ export class Game extends Engine {
 
     if (destRock && behindClear) {
       destRock.move(to);
-      if(this.isComplete()) {
+      if (this.isComplete()) {
         this.postInit();
         return undefined;
       }
@@ -257,10 +257,8 @@ export class Game extends Engine {
 
     this.addScene('mainmenu', new Mainmenu(this));
 
-    this.mapList = ["11"]
     return super.start(loader)
-  //    .then(() => this.goToScene('mainmenu'));
-      .then(() => this.postInit());
+      .then(() => this.goToScene('mainmenu'));
   }
 
   onPreUpdate(engine: Game, delta: number) {
