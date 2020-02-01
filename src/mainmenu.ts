@@ -1,6 +1,7 @@
 import {Input, Scene} from "excalibur";
 import {Game} from "./index";
 import CircleType from 'circletype';
+import {mapOrder, maps} from "./maps";
 
 export class Mainmenu extends Scene {
   menu: [string, () => void][] = [
@@ -22,8 +23,9 @@ export class Mainmenu extends Scene {
     this.menu = this.menu.map(([s, cb]) => [s, cb.bind(this)]);
   }
 
-  public swap(to: string) {
+  public toMain() {
     this.buttons = [];
+    this.focused = 0;
     document.getElementById(this.containerId)?.remove();
 
     const container = document.createElement("div");
@@ -74,14 +76,13 @@ export class Mainmenu extends Scene {
         this.circle = new CircleType(elem);
         subsubcontainer.className = "rotate";
       }, 10);
-      console.log(this.circle);
     }
   }
 
   public onActivate(_oldScene: Scene, _newScene: Scene): void {
     super.onActivate(_oldScene, _newScene);
 
-    this.swap("main");
+    this.toMain();
 
     document.getElementById('ui').hidden = false;
   }
@@ -113,6 +114,35 @@ export class Mainmenu extends Scene {
   }
 
   private levelSelect() {
-    console.log("Not implemented");
+    document.getElementById(this.containerId)?.remove();
+    this.buttons = [];
+    this.focused = 0;
+
+    const container = document.createElement("div");
+    container.id = this.containerId;
+    document.getElementById('ui').appendChild(container);
+
+    const subcontainer = document.createElement('div');
+    subcontainer.className = "maplist";
+    // Buttons
+    [...mapOrder].reverse().forEach((id, index) => {
+      if(!maps[id][1]) {
+        return;
+      }
+      const elem = document.createElement("button");
+      elem.textContent = `${id} ${maps[id][1]}`;
+      elem.onclick = () => {
+        this.game.mapList = [id];
+        this.game.postInit();
+      };
+      elem.onmouseover = () => {
+        this.focused = index;
+        elem.focus();
+      };
+      this.buttons.push(elem);
+      subcontainer.appendChild(elem);
+    });
+    this.buttons[0].focus();
+    container.appendChild(subcontainer);
   }
 }

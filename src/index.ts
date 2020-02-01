@@ -1,4 +1,4 @@
-import {Cell, Engine, Input, Scene, SpriteSheet, Texture, TileMap, TileSprite, Vector} from 'excalibur';
+import {Cell, Color, Engine, Input, Scene, SpriteSheet, Texture, TileMap, TileSprite, Vector} from 'excalibur';
 import {Splash} from "./loader";
 import {Player} from "./player";
 import {Rock} from "./rock";
@@ -63,8 +63,9 @@ export class Game extends Engine {
 
   constructor() {
     super({
-      //width: Game.width,
-      //height: Game.height
+      backgroundColor: Color.fromHex("333333"),
+      width: Game.width,
+      height: Game.height
     });
 
     this.setAntialiasing(false);
@@ -89,7 +90,7 @@ export class Game extends Engine {
     this.targetColors = [];
     this.rocks = [];
 
-    const map = addBorder(maps[this.currentMap]);
+    const map = addBorder(maps[this.currentMap][0]);
 
     this.cables = new TileMap(0, 0, 2 * tileSize, 2 * tileSize, map.length, map[0].length);
     this.cables.registerSpriteSheet('base',
