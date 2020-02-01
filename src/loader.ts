@@ -1,4 +1,4 @@
-import { Color, ILoadable, Loader, Engine, Label, Actor } from 'excalibur';
+import {Color, ILoadable, Loader, Engine, Label, Actor, Promise} from 'excalibur';
 import { DrawUtil } from 'excalibur/dist/Util/Index';
 
 export class Splash extends Loader {
@@ -9,14 +9,9 @@ export class Splash extends Loader {
     this.backgroundColor = 'rgb(77, 77, 77)';
   }
 
-  startButtonFactory = () => {
-    const buttonElement = document.createElement('button');
-    buttonElement.textContent = 'Start';
-    buttonElement.id = 'start-button';
-    buttonElement.style.display = 'none';
-    buttonElement.style.alignContent = 'none';
-    return buttonElement;
-  };
+  showPlayButton(): Promise<any> {
+    return Promise.resolve()
+  }
 
   public draw(ctx: CanvasRenderingContext2D) {
     const engine: Engine = (this as any)._engine;
