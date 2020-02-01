@@ -47,7 +47,7 @@ export class Game extends Engine {
     const gameScene = new Scene(this);
     this.addScene('game', gameScene);
 
-    const map = maps[0];
+    const map = maps[2];
 
     console.log(map[0].length, map.length);
 
