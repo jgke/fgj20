@@ -4,7 +4,7 @@ import {Player} from "./player";
 import {Rock} from "./rock";
 import {tileSize} from "./const";
 import {Direction, Direction2Vec} from "./Direction";
-import {maps} from "./maps";
+import {mapOrder, maps} from "./maps";
 
 type Tile = "empty" | "object" | "hole";
 
@@ -27,6 +27,10 @@ export class Game extends Engine {
   player: Player = undefined as any;
   rocks: Rock[] = [];
   tileMap: TileMap;
+  mapList = mapOrder;
+
+  currentColors = {};
+  targetColors = [];
 
   assets = {
     player: new Texture('/assets/img/player.png'),
@@ -44,12 +48,16 @@ export class Game extends Engine {
   }
 
   public postInit() {
+    const nextMap = this.mapList.pop();
+    const key = `game-${nextMap}`;
     const gameScene = new Scene(this);
-    this.addScene('game', gameScene);
+    this.addScene(key, gameScene);
 
-    const map = maps[2];
+    this.currentColors = {};
+    this.targetColors = [];
+    this.rocks = [];
 
-    console.log(map[0].length, map.length);
+    const map = maps[nextMap];
 
     this.tileMap = new TileMap(0, 0, tileSize, tileSize, map.length, map[0].length);
     this.tileMap.registerSpriteSheet('base',
@@ -71,6 +79,7 @@ export class Game extends Engine {
         this.getCell(x, y).solid = map[y][x] === 2;
         this.getCell(x, y).cable = undefined;
         if (map[y][x] >= 4 && map[y][x] < 8) {
+          this.targetColors.push(map[y][x]);
           this.getCell(x, y).cableOrigin = map[y][x];
         }
       }
@@ -89,7 +98,7 @@ export class Game extends Engine {
     }
 
     gameScene.add(this.player);
-    this.goToScene('game');
+    this.goToScene(key);
   }
 
   public getCell(x, y): Cell & { cable?: number, cableOrigin?: number } {
@@ -106,6 +115,7 @@ export class Game extends Engine {
   }
 
   public clearCabling(color: number) {
+    this.currentColors[color] = undefined;
     for (let y = 0; y < this.tileMap.rows; y++) {
       for (let x = 0; x < this.tileMap.cols; x++) {
         if (this.getCell(x, y).cable === color) {
@@ -126,6 +136,10 @@ export class Game extends Engine {
     }
   }
 
+  public isComplete() {
+    return this.targetColors.every(color => this.currentColors[color]);
+  }
+
   public playerMoves(from: Vector, to: Direction) {
     const cabling = this.player.cabling;
     const cableOrigin = this.player.cableOrigin;
@@ -136,6 +150,7 @@ export class Game extends Engine {
     const dy = destination.y;
 
     if (this.getCell(dx, dy).solid) {
+      console.log("solid");
       return undefined;
     }
 
@@ -146,6 +161,7 @@ export class Game extends Engine {
     if (destRock && behindClear) {
       destRock.move(to);
     } else if (destRock) {
+      console.log("destRock");
       return undefined;
     }
 
@@ -153,6 +169,10 @@ export class Game extends Engine {
       this.setCabling(dx, dy, cabling);
     } else if (cabling && this.getCell(dx, dy).cableOrigin === cabling && !cableOrigin.equals(destination)) {
       this.player.cabling = undefined;
+      this.currentColors[cabling] = true;
+      if(this.isComplete()) {
+        this.postInit();
+      }
     } else if (cabling && this.getCell(dx, dy).cable) {
       this.clearCabling(cabling);
       this.player.cabling = undefined;
