@@ -16,7 +16,8 @@ export class Player extends Actor {
     initPos: Vector,
     texture: Texture,
   ) {
-    super(initPos.x * tileSize + tileSize / 2, initPos.y * tileSize + tileSize / 2, tileSize, tileSize);
+    super(2 * initPos.x * tileSize + tileSize, 2 * initPos.y * tileSize + tileSize, tileSize, tileSize);
+    this.scale = new Vector(2, 2);
 
     this.previousDirection = Vector.Right;
     this.texture = texture;
@@ -34,7 +35,7 @@ export class Player extends Actor {
       const speed = distance.scale(0.5).add(this.moveSpeed.scale(0.001 * delta));
       const dOrigin = this.pos.sub(this.movingFrom).magnitude();
       this.pos = this.pos.add(speed);
-      if (distance.magnitude() < 1 || dOrigin >= tileSize) {
+      if (distance.magnitude() < 1 || dOrigin >= 2 * tileSize) {
         this.pos = this.movingTo;
         this.movingTo = undefined;
       }

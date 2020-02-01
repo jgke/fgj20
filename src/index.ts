@@ -7,6 +7,7 @@ import {Direction, Direction2Vec} from "./Direction";
 import {mapOrder, maps} from "./maps";
 
 import "./styles.scss"
+import {getTiles} from "./tilebuilder";
 
 type Tile = "empty" | "object" | "hole";
 
@@ -18,8 +19,8 @@ interface Level {
 
 function tilePosition(pos: Vector) {
   return new Vector(
-    Math.round((pos.x - tileSize / 2) / tileSize),
-    Math.round((pos.y - tileSize / 2) / tileSize)
+    Math.round((pos.x - tileSize) / (2*tileSize)),
+    Math.round((pos.y - tileSize) / (2*tileSize))
   )
 }
 
@@ -28,6 +29,7 @@ export class Game extends Engine {
   static height = 600;
   player: Player = undefined as any;
   rocks: Rock[] = [];
+  cables: TileMap;
   tileMap: TileMap;
   mapList = mapOrder;
 
@@ -39,6 +41,7 @@ export class Game extends Engine {
     player: new Texture('/assets/img/player.png'),
     rock: new Texture('/assets/img/rock.png'),
     map: new Texture('/assets/img/map.png'),
+    tileMap: new Texture('/assets/img/walls.png'),
   };
 
   constructor() {
@@ -52,7 +55,7 @@ export class Game extends Engine {
 
   public postInit() {
     this.currentMap = this.mapList.pop();
-    if(this.currentMap === undefined) {
+    if (this.currentMap === undefined) {
       // your winner
       return;
     }
@@ -66,21 +69,21 @@ export class Game extends Engine {
 
     const map = maps[this.currentMap];
 
-    this.tileMap = new TileMap(0, 0, tileSize, tileSize, map.length, map[0].length);
-    this.tileMap.registerSpriteSheet('base',
-      new SpriteSheet(this.assets.map, 4, 3, tileSize, tileSize));
+    this.cables = new TileMap(0, 0, 2 * tileSize, 2 * tileSize, map.length, map[0].length);
+    this.cables.registerSpriteSheet('base',
+      new SpriteSheet(this.assets.map, 4, 3, 2 * tileSize, 2 * tileSize));
 
     let playerPos = undefined;
 
     for (let y = 0; y < map.length; y++) {
       for (let x = 0; x < map[0].length; x++) {
-        if(map[y][x] < 0) {
-          if(map[y][x] === -2) {
+        if (map[y][x] < 0) {
+          if (map[y][x] === -2) {
             playerPos = new Vector(x, y);
           }
           continue;
         }
-        const ts = new TileSprite('base', map[y][x]);
+        const ts = new TileSprite('base', map[y][x] == 2 ? 0 : map[y][x]);
         // add to cell
         this.getCell(x, y).pushSprite(ts);
         this.getCell(x, y).solid = map[y][x] === 2;
@@ -91,7 +94,21 @@ export class Game extends Engine {
         }
       }
     }
+    gameScene.add(this.cables);
+
+    const tileMap = getTiles(map.map(row => row.map(cell => cell == 2)));
+    this.tileMap = new TileMap(0, 0, tileSize, tileSize, tileMap.length, tileMap[0].length);
+    this.tileMap.registerSpriteSheet('base',
+      new SpriteSheet(this.assets.tileMap, 5, 3, tileSize, tileSize));
+    for (let y = 0; y < tileMap.length; y++) {
+      for (let x = 0; x < tileMap[0].length; x++) {
+        const ts = new TileSprite('base', tileMap[y][x]);
+        // add to cell
+        this.tileMap.getCell(x, y).pushSprite(ts);
+      }
+    }
     gameScene.add(this.tileMap);
+
 
     this.player = new Player(new Vector(playerPos.x, playerPos.y), this.assets.player);
     for (let y = 0; y < map.length; y++) {
@@ -109,7 +126,7 @@ export class Game extends Engine {
   }
 
   public getCell(x, y): Cell & { cable?: number, cableOrigin?: number } {
-    return this.tileMap.getCell(x, y)
+    return this.cables.getCell(x, y)
   }
 
   public getRockAt(pos: Vector): Rock | undefined {
@@ -123,8 +140,8 @@ export class Game extends Engine {
 
   public clearCabling(color: number) {
     this.currentColors[color] = undefined;
-    for (let y = 0; y < this.tileMap.rows; y++) {
-      for (let x = 0; x < this.tileMap.cols; x++) {
+    for (let y = 0; y < this.cables.rows; y++) {
+      for (let x = 0; x < this.cables.cols; x++) {
         if (this.getCell(x, y).cable === color) {
           this.setCabling(x, y, undefined);
         }
@@ -177,14 +194,14 @@ export class Game extends Engine {
     } else if (cabling && this.getCell(dx, dy).cableOrigin === cabling && !cableOrigin.equals(destination)) {
       this.player.cabling = undefined;
       this.currentColors[cabling] = true;
-      if(this.isComplete()) {
+      if (this.isComplete()) {
         this.postInit();
       }
     } else if (cabling && this.getCell(dx, dy).cable) {
       this.clearCabling(cabling);
       this.player.cabling = undefined;
     } else if (this.getCell(dx, dy).cableOrigin) {
-      if(cabling) {
+      if (cabling) {
         this.clearCabling(cabling);
       }
       this.clearCabling(this.getCell(dx, dy).cableOrigin);
@@ -192,7 +209,7 @@ export class Game extends Engine {
       this.player.cableOrigin = new Vector(dx, dy);
     }
 
-    return destination.scale(tileSize).add(new Vector(tileSize / 2, tileSize / 2));
+    return destination.scale(2 * tileSize).add(new Vector(tileSize, tileSize));
   }
 
 
@@ -210,7 +227,7 @@ export class Game extends Engine {
     if (engine.input.keyboard.wasPressed(Input.Keys.R)) {
       this.mapList.push(this.currentMap);
       this.postInit();
-    } else if(engine.input.keyboard.wasPressed(Input.Keys.N)) {
+    } else if (engine.input.keyboard.wasPressed(Input.Keys.N)) {
       this.postInit();
     }
   }
