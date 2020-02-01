@@ -138,6 +138,7 @@ export class Game extends Engine {
     }
 
     gameScene.add(this.player);
+    gameScene.camera.strategy.lockToActor(this.player);
     this.goToScene(key);
   }
 
