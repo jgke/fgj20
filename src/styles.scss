@@ -1,15 +1,32 @@
+* {
+  box-sizing: border-box;
+}
+
+
 body {
   display: flex;
   background-color: #555;
-  flex-direction: row;
-  padding: 30px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+
+  canvas {
+    top: 0;
+    left: 0;
+    position: absolute;
+  }
 
   @media screen and (max-width: 800px) {
-    padding: 0;
-    margin: 0;
-    canvas {
+    canvas, #statusbar {
       width: 100% !important;
     }
+  }
+
+  #statusbar {
+    background-color: white;
+    padding: 20px;
+    width: 800px;
   }
 
   #ui_container {
@@ -43,6 +60,10 @@ body {
       background-color: red;
     }
 
+    button {
+      cursor: pointer;
+    }
+
     .subcontainer {
       width: 400px;
       > h2 {
@@ -61,24 +82,11 @@ body {
     }
 
     .rotate {
-      -webkit-animation: spin 10s linear infinite;
-      -moz-animation: spin 10s linear infinite;
-      animation: spin 10s linear infinite;
+      animation: spin 12s linear infinite;
     }
 
-    @-moz-keyframes spin {
-      100% {
-        -moz-transform: rotate(-360deg);
-      }
-    }
-    @-webkit-keyframes spin {
-      100% {
-        -webkit-transform: rotate(-360deg);
-      }
-    }
     @keyframes spin {
       100% {
-        -webkit-transform: rotate(-360deg);
         transform: rotate(-360deg);
       }
     }

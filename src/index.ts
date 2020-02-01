@@ -21,8 +21,8 @@ interface Level {
 
 function tilePosition(pos: Vector) {
   return new Vector(
-    Math.round((pos.x - tileSize) / (2*tileSize)),
-    Math.round((pos.y - tileSize) / (2*tileSize))
+    Math.round((pos.x - tileSize) / (2 * tileSize)),
+    Math.round((pos.y - tileSize) / (2 * tileSize))
   )
 }
 
@@ -31,14 +31,14 @@ function addBorder(map: number[][]): number[][] {
   for (let y = 0; y < map.length; y++) {
     result.push([]);
     result[y].push(2);
-    for(let x = 0; x < map[y].length; x++) {
+    for (let x = 0; x < map[y].length; x++) {
       result[y].push(map[y][x])
     }
     result[y].push(2);
   }
-  return [Array(map[0].length+2).fill(2)]
+  return [Array(map[0].length + 2).fill(2)]
     .concat(result)
-    .concat([Array(map[0].length+2).fill(2)]);
+    .concat([Array(map[0].length + 2).fill(2)]);
 }
 
 export class Game extends Engine {
@@ -63,17 +63,22 @@ export class Game extends Engine {
 
   constructor() {
     super({
-      width: Game.width,
-      height: Game.height
+      //width: Game.width,
+      //height: Game.height
     });
 
     this.setAntialiasing(false);
+  }
+
+  public initMaps() {
+    this.mapList = [...mapOrder];
   }
 
   public postInit() {
     this.currentMap = this.mapList.pop();
     if (this.currentMap === undefined) {
       // your winner
+      this.goToScene('mainmenu');
       return;
     }
     const key = `game-${this.currentMap}`;
@@ -126,7 +131,6 @@ export class Game extends Engine {
 
     gameScene.add(this.tileMap);
     gameScene.add(this.cables);
-
 
     this.player = new Player(new Vector(playerPos.x, playerPos.y), this.assets.player);
     for (let y = 0; y < map.length; y++) {
@@ -244,11 +248,13 @@ export class Game extends Engine {
   onPreUpdate(engine: Game, delta: number) {
     super.onPreUpdate(engine, delta);
 
-    if (engine.input.keyboard.wasPressed(Input.Keys.R)) {
-      this.mapList.push(this.currentMap);
-      this.postInit();
-    } else if (engine.input.keyboard.wasPressed(Input.Keys.N)) {
-      this.postInit();
+    if (!(this.currentScene instanceof Mainmenu)) {
+      if (engine.input.keyboard.wasPressed(Input.Keys.R)) {
+        this.mapList.push(this.currentMap);
+        this.postInit();
+      } else if (engine.input.keyboard.wasPressed(Input.Keys.N)) {
+        this.postInit();
+      }
     }
   }
 }

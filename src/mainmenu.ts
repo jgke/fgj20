@@ -12,6 +12,8 @@ export class Mainmenu extends Scene {
   focused: number = 0;
 
   game: Game;
+  circle: any;
+  containerId = "ui_container";
 
   constructor(engine: Game) {
     super(engine);
@@ -22,10 +24,10 @@ export class Mainmenu extends Scene {
 
   public swap(to: string) {
     this.buttons = [];
-    document.getElementById("ui_container")?.remove();
+    document.getElementById(this.containerId)?.remove();
 
     const container = document.createElement("div");
-    container.id = "ui_container";
+    container.id = this.containerId;
     document.getElementById('ui').appendChild(container);
 
     {
@@ -67,7 +69,12 @@ export class Mainmenu extends Scene {
       subsubcontainer.appendChild(elem);
       subcontainer.appendChild(subsubcontainer);
       container.appendChild(subcontainer);
-      new CircleType(elem);
+      setTimeout(() => {
+        subsubcontainer.className = "";
+        this.circle = new CircleType(elem);
+        subsubcontainer.className = "rotate";
+      }, 10);
+      console.log(this.circle);
     }
   }
 
@@ -81,7 +88,7 @@ export class Mainmenu extends Scene {
 
   public onDeactivate(_oldScene: Scene, _newScene: Scene): void {
     super.onDeactivate(_oldScene, _newScene);
-    document.getElementById("ui_container").remove();
+    this.circle.destroy();
     document.getElementById('ui').hidden = true;
   }
 
@@ -101,6 +108,7 @@ export class Mainmenu extends Scene {
   }
 
   private startGame() {
+    this.game.initMaps();
     this.game.postInit();
   }
 
