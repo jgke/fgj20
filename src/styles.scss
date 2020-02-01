@@ -1,8 +1,7 @@
 body {
   display: flex;
-  align-items: center;
   background-color: #555;
-  flex-direction: column;
+  flex-direction: row;
   padding: 30px;
 
   @media screen and (max-width: 800px) {
@@ -11,6 +10,11 @@ body {
     canvas {
       width: 100% !important;
     }
+  }
+
+  #ui_container {
+    display: flex;
+    align-items: center;
   }
 
   #ui {
@@ -37,7 +41,46 @@ body {
 
     button:focus, button:active {
       background-color: red;
+    }
 
+    .subcontainer {
+      width: 400px;
+      > h2 {
+        text-align: center;
+        color: white;
+      }
+    }
+
+    .rotate {
+      display: block;
+      overflow: hidden;
+    }
+
+    .rotate h2 {
+      color: white;
+    }
+
+    .rotate {
+      -webkit-animation: spin 10s linear infinite;
+      -moz-animation: spin 10s linear infinite;
+      animation: spin 10s linear infinite;
+    }
+
+    @-moz-keyframes spin {
+      100% {
+        -moz-transform: rotate(-360deg);
+      }
+    }
+    @-webkit-keyframes spin {
+      100% {
+        -webkit-transform: rotate(-360deg);
+      }
+    }
+    @keyframes spin {
+      100% {
+        -webkit-transform: rotate(-360deg);
+        transform: rotate(-360deg);
+      }
     }
   }
 }
