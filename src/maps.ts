@@ -41,7 +41,7 @@ const sokoban1 = [
 
 const doubleRockTest = [
   [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
-  [2, 4, p, 0, r, r, 4, 0, 0, 2],
+  [2, 4, p, 0, 0, r, 4, 0, 0, 2],
   [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
 ];
 
@@ -53,13 +53,26 @@ const rockOnCableTest = [
   [2, 2, 2, 2, 2, 2, 2, 2, 2],
 ];
 
+const qqqEndScreen = [
+  [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+  [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+  [2, 0, 2, 2, 2, 2, 0, 2, 2, 2, 2, 0, 2],
+  [2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 2, 0, 2],
+  [2, 0, 2, 0, 2, 2, p, 0, 2, 2, 0, 0, 2],
+  [2, 0, 2, 0, 0, 2, 0, 2, 0, 0, 0, 0, 2],
+  [2, 0, 2, 2, 2, 2, 0, 2, 2, 2, 2, 0, 2],
+  [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+  [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]
+];
+
 export const maps = {
-  0: helloWorld,
-  1: introduction,
-  2: orderMatters,
-  3: sokoban1,
-  12: doubleRockTest,
-  13: rockOnCableTest
+  "00": helloWorld,
+  "01": introduction,
+  "02": orderMatters,
+  "03": sokoban1,
+  "12": doubleRockTest,
+  "13": rockOnCableTest,
+  "99": qqqEndScreen
 };
 
 export const mapOrder = Object.keys(maps).sort().reverse();
