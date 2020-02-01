@@ -1,7 +1,7 @@
-import {Actor, CollisionType, Engine, EventTypes, Input, Sound, SpriteSheet, Texture, Vector} from 'excalibur';
+import {Actor, Engine, Texture, Vector} from 'excalibur';
 
 import {Game} from './.';
-import {Direction, Direction2Vec} from './Direction';
+import {Direction} from './Direction';
 import {tileSize} from "./const";
 
 export class Rock extends Actor {
@@ -13,7 +13,8 @@ export class Rock extends Actor {
     initPos: Vector,
     texture: Texture,
   ) {
-    super(initPos.x * tileSize + tileSize/2, initPos.y * tileSize + tileSize/2, tileSize, tileSize);
+    super(2 * initPos.x * tileSize + tileSize, 2 * initPos.y * tileSize + tileSize, tileSize, tileSize);
+    this.scale = new Vector(2, 2);
 
     this.previousDirection = Vector.Right;
     this.texture = texture;
@@ -38,13 +39,13 @@ export class Rock extends Actor {
 
   move(to: Direction) {
     if (to === "Up") {
-      this.movingTo = this.pos.add(new Vector(0, -tileSize));
+      this.movingTo = this.pos.add(new Vector(0, 2 * -tileSize));
     } else if (to === "Down") {
-      this.movingTo = this.pos.add(new Vector(0, tileSize));
+      this.movingTo = this.pos.add(new Vector(0, 2 * tileSize));
     } else if (to === "Left") {
-      this.movingTo = this.pos.add(new Vector(-tileSize, 0));
+      this.movingTo = this.pos.add(new Vector(2 * -tileSize, 0));
     } else if (to === "Right") {
-      this.movingTo = this.pos.add(new Vector(tileSize, 0));
+      this.movingTo = this.pos.add(new Vector(2 * tileSize, 0));
     }
   }
 }
