@@ -1,4 +1,4 @@
-import {Cell, Engine, Scene, SpriteSheet, Texture, TileMap, TileSprite, Vector} from 'excalibur';
+import {Cell, Engine, Input, Scene, SpriteSheet, Texture, TileMap, TileSprite, Vector} from 'excalibur';
 import {Splash} from "./loader";
 import {Player} from "./player";
 import {Rock} from "./rock";
@@ -31,6 +31,7 @@ export class Game extends Engine {
 
   currentColors = {};
   targetColors = [];
+  currentMap = undefined;
 
   assets = {
     player: new Texture('/assets/img/player.png'),
@@ -48,8 +49,8 @@ export class Game extends Engine {
   }
 
   public postInit() {
-    const nextMap = this.mapList.pop();
-    const key = `game-${nextMap}`;
+    this.currentMap = this.mapList.pop();
+    const key = `game-${this.currentMap}`;
     const gameScene = new Scene(this);
     this.addScene(key, gameScene);
 
@@ -57,7 +58,7 @@ export class Game extends Engine {
     this.targetColors = [];
     this.rocks = [];
 
-    const map = maps[nextMap];
+    const map = maps[this.currentMap];
 
     this.tileMap = new TileMap(0, 0, tileSize, tileSize, map.length, map[0].length);
     this.tileMap.registerSpriteSheet('base',
@@ -195,6 +196,17 @@ export class Game extends Engine {
     ]);
 
     return super.start(loader).then(() => this.postInit());
+  }
+
+  onPreUpdate(engine: Game, delta: number) {
+    super.onPreUpdate(engine, delta);
+
+    if (engine.input.keyboard.wasPressed(Input.Keys.R)) {
+      this.mapList.push(this.currentMap);
+      this.postInit();
+    } else if(engine.input.keyboard.wasPressed(Input.Keys.N)) {
+      this.postInit();
+    }
   }
 }
 
