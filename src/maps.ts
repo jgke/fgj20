@@ -1,3 +1,4 @@
+const x = -3;
 const p = -2;
 const r = -1;
 
@@ -17,6 +18,15 @@ const introduction = [
   [2, 0, 0, 0, 0, 2, 2],
   [2, 5, 2, 2, 4, 2, 2],
   [2, 2, 2, 2, 2, 2, 2],
+]
+
+const lifegoals = [
+  [2, 2, 2, 2, 2, 2],
+  [2, p, 0, 0, 4, 2],
+  [2, 2, r, 2, 0, 2],
+  [2, 0, 0, 0, 0, 2],
+  [2, x, 0, 0, 4, 2],
+  [2, 2, 2, 2, 2, 2],
 ];
 
 const orderMatters = [
@@ -76,6 +86,23 @@ const sokobanStar = [
   [0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 0, 2, 2, 2, 0, 0],
 ];
 
+const familiar = [
+  [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
+  [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
+  [2,2,2,2,2,2,2,0,0,2,2,2,2,2,2],
+  [2,2,x,2,2,0,0,0,0,0,0,0,0,0,2],
+  [2,2,x,2,2,0,0,r,0,0,2,r,0,0,2],
+  [2,2,x,2,2,2,0,2,2,2,2,0,0,2,2],
+  [2,2,0,0,2,2,0,2,2,2,2,2,0,2,2],
+  [2,2,0,0,0,0,r,0,2,2,2,2,0,2,2],
+  [2,2,0,0,2,2,0,r,2,2,0,r,0,2,2],
+  [2,2,x,2,2,p,r,0,0,0,0,0,0,2,2],
+  [2,2,x,2,2,2,2,2,2,2,0,2,0,2,2],
+  [2,2,x,2,2,2,2,2,2,2,0,0,0,2,2],
+  [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
+  [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
+];
+
 const doubleRockTest = [
   [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
   [2, 4, p, 0, 0, r, 4, 0, 0, 2],
@@ -105,10 +132,12 @@ const EndScreen = [
 export const maps: {[id: string]: [number[][], string]} = {
   "00": [helloWorld, "Hello world!"],
   "01": [introduction, "Introduction"],
-  "02": [orderMatters, "Order matters..."],
-  "03": [sokoban1, "Sokoban"],
-  "04": [sokoban2, "Too"],
+  "02": [lifegoals, "Life goals"],
+  "03": [orderMatters, "Order matters..."],
+  "04": [sokoban1, "Sokoban"],
+  "05": [sokoban2, "Too"],
   "10": [sokobanStar, "Star"],
+  "11": [familiar, "Somehow familiar"],
   //"91": doubleRockTest,
   //"92": rockOnCableTest,
   "99": [EndScreen, ""],

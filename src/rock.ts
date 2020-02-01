@@ -8,6 +8,7 @@ export class Rock extends Actor {
   texture: Texture;
   previousDirection: Vector;
   movingTo?: Vector;
+  actualPos: Vector;
 
   constructor(
     initPos: Vector,
@@ -18,6 +19,7 @@ export class Rock extends Actor {
 
     this.previousDirection = Vector.Right;
     this.texture = texture;
+    this.actualPos = this.pos;
   }
 
   onInitialize(game: Engine) {
@@ -47,5 +49,6 @@ export class Rock extends Actor {
     } else if (to === "Right") {
       this.movingTo = this.pos.add(new Vector(2 * tileSize, 0));
     }
+    this.actualPos = this.movingTo;
   }
 }

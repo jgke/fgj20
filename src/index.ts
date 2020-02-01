@@ -46,6 +46,7 @@ export class Game extends Engine {
   static height = 600;
   player: Player = undefined as any;
   rocks: Rock[] = [];
+  rockTargets: Vector[] = [];
   cables: TileMap;
   tileMap: TileMap;
   mapList = mapOrder;
@@ -59,6 +60,7 @@ export class Game extends Engine {
     rock: new Texture('/assets/img/rock.png'),
     map: new Texture('/assets/img/map.png'),
     tileMap: new Texture('/assets/img/walls.png'),
+    cables: new Texture('/assets/img/cables.png'),
   };
 
   constructor() {
@@ -90,6 +92,7 @@ export class Game extends Engine {
     this.currentColors = {};
     this.targetColors = [];
     this.rocks = [];
+    this.rockTargets = [];
 
     const map = addBorder(maps[this.currentMap][0]);
 
@@ -105,13 +108,19 @@ export class Game extends Engine {
           if (map[y][x] === -2) {
             playerPos = new Vector(x, y);
           }
-          continue;
+          if(map[y][x] === -3) {
+            this.rockTargets.push(new Vector(x, y));
+            map[y][x] = 3;
+          } else {
+            continue;
+          }
         }
         const ts = new TileSprite('base', map[y][x] == 2 ? 0 : map[y][x]);
         // add to cell
         this.getCell(x, y).pushSprite(ts);
         this.getCell(x, y).solid = map[y][x] === 2;
         this.getCell(x, y).cable = undefined;
+        this.getCell(x, y).cross = map[y][x] === -3;
         if (map[y][x] >= 4 && map[y][x] < 8) {
           this.targetColors.push(map[y][x]);
           this.getCell(x, y).cableOrigin = map[y][x];
@@ -151,13 +160,13 @@ export class Game extends Engine {
     this.goToScene(key);
   }
 
-  public getCell(x, y): Cell & { cable?: number, cableOrigin?: number } {
+  public getCell(x, y): Cell & { cable?: number, cableOrigin?: number, cross?: boolean } {
     return this.cables.getCell(x, y)
   }
 
   public getRockAt(pos: Vector): Rock | undefined {
     for (let rock of this.rocks) {
-      if (pos.equals(tilePosition(rock.pos))) {
+      if (pos.equals(tilePosition(rock.actualPos))) {
         return rock;
       }
     }
@@ -187,7 +196,8 @@ export class Game extends Engine {
   }
 
   public isComplete() {
-    return this.targetColors.every(color => this.currentColors[color]);
+    return this.targetColors.every(color => this.currentColors[color])
+      && this.rockTargets.every(target => this.rocks.some(rock => tilePosition(rock.actualPos).equals(target)));
   }
 
   public playerMoves(from: Vector, to: Direction) {
@@ -209,6 +219,10 @@ export class Game extends Engine {
 
     if (destRock && behindClear) {
       destRock.move(to);
+      if(this.isComplete()) {
+        this.postInit();
+        return undefined;
+      }
     } else if (destRock) {
       return undefined;
     }
@@ -243,6 +257,7 @@ export class Game extends Engine {
 
     this.addScene('mainmenu', new Mainmenu(this));
 
+    this.mapList = ["11"]
     return super.start(loader)
   //    .then(() => this.goToScene('mainmenu'));
       .then(() => this.postInit());
