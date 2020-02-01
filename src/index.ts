@@ -50,6 +50,10 @@ export class Game extends Engine {
 
   public postInit() {
     this.currentMap = this.mapList.pop();
+    if(this.currentMap === undefined) {
+      // your winner
+      return;
+    }
     const key = `game-${this.currentMap}`;
     const gameScene = new Scene(this);
     this.addScene(key, gameScene);
