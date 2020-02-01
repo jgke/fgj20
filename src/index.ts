@@ -8,6 +8,7 @@ import {mapOrder, maps} from "./maps";
 
 import "./styles.scss"
 import {getTiles} from "./tilebuilder";
+import {MyCamera} from "./camera";
 
 type Tile = "empty" | "object" | "hole";
 
@@ -138,7 +139,8 @@ export class Game extends Engine {
     }
 
     gameScene.add(this.player);
-    gameScene.camera.strategy.lockToActor(this.player);
+    //gameScene.camera.strategy.lockToActor(this.player);
+    gameScene.camera.addStrategy(new MyCamera(this.player, map[0].length, map.length));
     this.goToScene(key);
   }
 
