@@ -385,6 +385,7 @@ export class Game extends Engine {
     return super.start(loader)
       .then(() => {
         this.assets.music.play();
+        this.assets.music.loop = true;
         this.goToScene('mainmenu')
       });
   }
