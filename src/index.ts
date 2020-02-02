@@ -326,7 +326,7 @@ export class Game extends Engine {
     this.addScene('mainmenu', new Mainmenu(this));
 
     return super.start(loader)
-      .then(() => this.goToScene('mainmenu'));
+    .then(() => this.goToScene('mainmenu'));
   }
 
   onPreUpdate(engine: Game, delta: number) {
