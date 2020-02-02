@@ -57,7 +57,7 @@ export class Game extends Engine {
 
   assets = {
     player: new Texture('/assets/img/player.png'),
-    rock: new Texture('/assets/img/rock.png'),
+    rock: new Texture('/assets/img/chair.png'),
     map: new Texture('/assets/img/map.png'),
     tileMap: new Texture('/assets/img/walls.png'),
     cables: new Texture('/assets/img/cables.png'),
