@@ -355,7 +355,7 @@ export class Game extends Engine {
     subcontainer.className = "levelcomplete";
 
     const winner = document.createElement("h2");
-    winner.textContent = "You're winner";
+    winner.textContent = "Success!";
 
     const body = document.createElement("p");
     body.textContent = maps[this.currentMap][3];
