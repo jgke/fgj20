@@ -56,7 +56,7 @@ export class Game extends Engine {
   currentMap = undefined;
 
   assets = {
-    player: new Texture('/assets/img/player.png'),
+    player: new Texture('/assets/img/roadie.png'),
     rock: new Texture('/assets/img/chair.png'),
     crate: new Texture('/assets/img/wood_box.png'),
     box: new Texture('/assets/img/hard_box.png'),
