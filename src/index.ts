@@ -84,7 +84,8 @@ export class Game extends Engine {
     super({
       backgroundColor: Color.fromHex("55555500"),
       width: Game.width,
-      height: Game.height
+      height: Game.height,
+      pointerScope: Input.PointerScope.Canvas
     });
 
     this.setAntialiasing(false);
