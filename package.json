@@ -4,8 +4,9 @@
   "description": "",
   "private": true,
   "scripts": {
-    "build": "webpack && rm -rf public && mkdir -p public/build && cp -r assets public && cp dist/* public",
-    "start": "npm run build && webpack-dev-server --open",
+    "build": "webpack --config webpack.dev.js && rm -rf public && mkdir -p public/build && cp -r assets public && cp dist/* public",
+    "build-prod": "rm -rf public && webpack --config webpack.prod.js && cp -r assets public && cp dist/index.html public && cp dist/CNAME public",
+    "start": "npm run build && webpack-dev-server --open --config webpack.dev.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -19,7 +20,8 @@
     "typescript": "^3.7.5",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10",
-    "webpack-dev-server": "^3.10.1"
+    "webpack-dev-server": "^3.10.1",
+    "webpack-merge": "^4.2.2"
   },
   "dependencies": {
     "circletype": "^2.3.0",
