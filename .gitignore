@@ -3,6 +3,7 @@
 /public
 /tmp
 /out-tsc
+/*.zip
 
 # Runtime data
 pids
