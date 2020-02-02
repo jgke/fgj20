@@ -199,7 +199,7 @@ const EndScreen = [
   [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
 ];
 
-export const maps: {[id: string]: [number[][], string, string?, string?]} = {
+export const maps: {[id: string]: [number[][], string, string?, string?, string?]} = {
   "00": [helloWorld, "Practicing at home", "You're playing guitar alone at home", "rock"],
   "01": [introduction, "Band training", "The band's practicing in a cramped basement. The drummer flaked.", "rock"],
   "02": [lifegoals, "After hours", "The bassist had to go too. You do some rearranging and stay to practice."],

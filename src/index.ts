@@ -147,7 +147,7 @@ export class Game extends Engine {
     for (let y = 0; y < map.length; y++) {
       for (let x = 0; x < map[0].length; x++) {
         if (map[y][x] === -1) {
-          const rock = new Rock(new Vector(x, y), this.assets[maps[this.currentMap][3] || "rock"]);
+          const rock = new Rock(new Vector(x, y), this.assets[maps[this.currentMap][4] || "rock"]);
           this.rocks.push(rock);
           gameScene.add(rock);
         }
@@ -300,6 +300,9 @@ export class Game extends Engine {
     const winner = document.createElement("h2");
     winner.textContent = "You're winner";
 
+    const body = document.createElement("p");
+    body.textContent = maps[this.currentMap][3];
+
     const button = document.createElement("button");
     button.textContent = "Continue";
 
@@ -310,6 +313,7 @@ export class Game extends Engine {
     };
 
     subcontainer.appendChild(winner);
+    subcontainer.appendChild(body);
     subcontainer.appendChild(button);
     ui.appendChild(subcontainer);
   }
