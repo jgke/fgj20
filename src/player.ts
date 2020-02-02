@@ -19,7 +19,6 @@ export class Player extends Actor {
     texture: Texture,
   ) {
     super(2 * initPos.x * tileSize + tileSize, 2 * initPos.y * tileSize + tileSize, tileSize, tileSize);
-    this.scale = new Vector(2, 2);
 
     this.previousDirection = Vector.Right;
     this.texture = texture;
