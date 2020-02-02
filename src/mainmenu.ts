@@ -136,7 +136,7 @@ export class Mainmenu extends Scene {
       elem.textContent = `${id} ${maps[id][1]}`;
       elem.onclick = () => {
         this.game.mapList = [id];
-        this.game.postInit();
+        this.game.levelStart();
       };
       elem.onmouseover = () => {
         this.focused = index;
