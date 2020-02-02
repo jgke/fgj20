@@ -1,4 +1,4 @@
-import {Cell, Color, Engine, Input, Scene, SpriteSheet, Texture, TileMap, TileSprite, Vector} from 'excalibur';
+import {Actor, Cell, Color, Engine, Input, Scene, SpriteSheet, Texture, TileMap, TileSprite, Vector} from 'excalibur';
 import {Splash} from "./loader";
 import {Player} from "./player";
 import {Rock} from "./rock";
@@ -61,6 +61,7 @@ export class Game extends Engine {
     map: new Texture('/assets/img/map.png'),
     tileMap: new Texture('/assets/img/walls.png'),
     cables: new Texture('/assets/img/cables.png'),
+    cross: new Texture('/assets/img/cross.png'),
   };
 
   constructor() {
@@ -110,7 +111,7 @@ export class Game extends Engine {
           }
           if (map[y][x] === -3) {
             this.rockTargets.push(new Vector(x, y));
-            map[y][x] = 3;
+            map[y][x] = 0;
           } else {
             continue;
           }
@@ -120,7 +121,6 @@ export class Game extends Engine {
         this.getCell(x, y).pushSprite(ts);
         this.getCell(x, y).solid = map[y][x] === 2;
         this.getCell(x, y).cable = undefined;
-        this.getCell(x, y).cross = map[y][x] === -3;
         if (map[y][x] >= 4 && map[y][x] < 8) {
           this.targetColors.push(map[y][x]);
           this.getCell(x, y).cableOrigin = map[y][x];
@@ -154,13 +154,19 @@ export class Game extends Engine {
       }
     }
 
+    for (const crossPosition of this.rockTargets) {
+      const cross = new Actor(2 * crossPosition.x * tileSize + tileSize, 2 * crossPosition.y * tileSize + tileSize, 2 * tileSize, 2 * tileSize)
+      cross.addDrawing(this.assets.cross);
+      gameScene.add(cross);
+    }
+
     gameScene.add(this.player);
     //gameScene.camera.strategy.lockToActor(this.player);
     gameScene.camera.addStrategy(new MyCamera(this.player, map[0].length, map.length));
     this.goToScene(key);
   }
 
-  public getCell(x, y): Cell & { cable?: number, cableOrigin?: number, cross?: boolean } {
+  public getCell(x, y): Cell & { cable?: number, cableOrigin?: number } {
     return this.cables.getCell(x, y)
   }
 
