@@ -368,10 +368,6 @@ export class Game extends Engine {
 
     this.addScene('mainmenu', new Mainmenu(this));
 
-
-    this.mapList = ["13"];
-    return super.start(loader).then(() => this.levelStart());
-
     return super.start(loader)
       .then(() => this.goToScene('mainmenu'));
   }
