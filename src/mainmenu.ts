@@ -82,6 +82,7 @@ export class Mainmenu extends Scene {
   public onActivate(_oldScene: Scene, _newScene: Scene): void {
     super.onActivate(_oldScene, _newScene);
     document.getElementById('levelname').textContent = "";
+    document.getElementById('ui').innerHTML = "";
 
     this.toMain();
 
@@ -92,6 +93,7 @@ export class Mainmenu extends Scene {
     super.onDeactivate(_oldScene, _newScene);
     this.circle.destroy();
     document.getElementById('ui').hidden = true;
+    document.getElementById('ui').innerHTML = "";
   }
 
   update(engine: Game, delta: number): void {

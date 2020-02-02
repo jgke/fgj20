@@ -50,6 +50,21 @@ body {
     width: 800px;
     height: 30px;
 
+    .levelcomplete {
+      margin-left: (800-480px)/2;
+      margin-top: (600-320px)/2;
+      box-sizing: border-box;
+      width: 480px;
+      height: 320px;
+      background-color: #FEFEFEAA;
+      border-radius: 10px;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
     .maplist {
       width: 800px;
       display: grid;

@@ -226,7 +226,7 @@ export class Game extends Engine {
     if (destRock && behindClear) {
       destRock.move(to);
       if (this.isComplete()) {
-        this.postInit();
+        this.levelComplete();
         return undefined;
       }
     } else if (destRock) {
@@ -239,7 +239,7 @@ export class Game extends Engine {
       this.player.cabling = undefined;
       this.currentColors[cabling] = true;
       if (this.isComplete()) {
-        this.postInit();
+        this.levelComplete();
       }
     } else if (cabling && this.getCell(dx, dy).cable) {
       this.clearCabling(cabling);
@@ -254,6 +254,32 @@ export class Game extends Engine {
     }
 
     return destination.scale(2 * tileSize).add(new Vector(tileSize, tileSize));
+  }
+
+  public levelComplete() {
+    const ui = document.getElementById('ui');
+    ui.innerHTML = "";
+    ui.hidden = false;
+
+    const subcontainer = document.createElement("div");
+    subcontainer.className = "levelcomplete";
+
+    const winner = document.createElement("h2");
+    winner.textContent = "You're winner";
+
+    const button = document.createElement("button");
+    button.textContent = "Continue";
+
+    button.onclick = () => {
+      ui.innerHTML = "";
+      ui.hidden = true;
+      this.postInit();
+    };
+
+
+    subcontainer.appendChild(winner);
+    subcontainer.appendChild(button);
+    ui.appendChild(subcontainer);
   }
 
   public start() {
