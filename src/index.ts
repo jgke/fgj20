@@ -125,9 +125,9 @@ export class Game extends Engine {
         this.getCell(x, y).pushSprite(ts);
         this.getCell(x, y).solid = map[y][x] === 2;
         this.getCell(x, y).cable = undefined;
-        if (map[y][x] >= 4 && map[y][x] < 8) {
-          this.targetColors.push(map[y][x]);
-          this.getCell(x, y).cableOrigin = map[y][x];
+        if (map[y][x] >= 4) {
+          this.targetColors.push(map[y][x] % 4 + 4);
+          this.getCell(x, y).cableOrigin = map[y][x] % 4 + 4;
         }
       }
     }
