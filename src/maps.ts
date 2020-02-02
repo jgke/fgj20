@@ -78,7 +78,7 @@ const sokoban3 = [
   [2, 0, 0, 0, r, 0, r, r, 0, 0, 0, 2],
   [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
   [2, 2, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2],
-  [0, 2, 0, 0, 4, 0, 5, 0, 3, 0, 2, 0],
+  [0, 2, 0, 0, 4, 0, 5, 0, 0, 0, 2, 0],
   [0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0],
   [0, 2, 0, 0, r, 6, r, 0, r, 0, 2, 0],
   [0, 2, 0, 4, r, 0, r, 0, r, 5, 2, 0],
@@ -200,14 +200,14 @@ const EndScreen = [
 ];
 
 export const maps: {[id: string]: [number[][], string, string?, string?, string?]} = {
-  "00": [helloWorld, "Practicing at home", "You're playing guitar alone at home. Connect the red squares.", "You're so stoked you got a band together!"],
-  "01": [introduction, "Band training", "The band's practicing in a cramped basement. The drummer flaked. Connect each color.", "\"I have to see a man about a dog.\" -bassist"],
+  "00": [helloWorld, "Practicing at home", "You're playing guitar alone at home. Connect the red squares.", "You're so stoked you got in a band!"],
+  "01": [introduction, "Band training", "The band's practicing in a cramped basement. The drummer flaked. Connect each color.", "bassist: \"I have to see a man about a dog.\""],
   "02": [lifegoals, "After hours", "The bassist had to go too. You do some rearranging and stay to practice. Move an object onto the X.", "Big day next weekend!"],
-  "03": [orderMatters, "On tour!", "So apparently the bassist got you a new lead guitarist. And you're late for the gig. \"Everyone's the roadie\"... Do not cross the streams!", "Just look at them go!"],
+  "03": [orderMatters, "On tour!", "So apparently the bassist got you a new lead guitarist. And you're late for the gig. bassist: \"Everyone's the roadie\"... Do not cross the streams!", "Just look at them go!"],
   "04": [sokoban1, "Warehouse blues", "You're itching to play, but the rest of the band locked the door. You set up your guitar in some storage space.", "Wonder what the guys were giggling about in there..."],
   "05": [sokoban2, "Blind trial", "You take a side job for a scientific study on telepathic guitarists playing in time. One of them looks like a bassist, though.", "Wow, they really are in time!"],
   "06": [sokoban3, "Dancehall", "You get to arrange the seating now, too!", "You feel useful."],
-  "07": [alone3, "Warehouse swing", "Tidying up for the final gig, you have a minute to practice.", "\"Nobody knows the trouble I've seen\"..."],
+  "07": [alone3, "Warehouse swing", "Tidying up for another gig, you have a minute to practice.", "\"Nobody knows the trouble I've seen\"..."],
   "08": [sokobanStar, "Wedding gig", "The band's a surprise. You're running the cables discreetly.", "The bride was in tears! You have something in your eye, too."],
   "09": [pureban, "Dayjob", "You can't concentrate at work. The gig's all you can think about", "You've memorized all of the songs just in case"],
   "10": [familiar, "Somehow familiar", "Until you're reminded of something faintly familiar", ""],
