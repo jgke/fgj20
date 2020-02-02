@@ -256,6 +256,36 @@ export class Game extends Engine {
     return destination.scale(2 * tileSize).add(new Vector(tileSize, tileSize));
   }
 
+  public levelStart() {
+    this.postInit();
+
+    const ui = document.getElementById('ui');
+    ui.innerHTML = "";
+    ui.hidden = false;
+
+    const subcontainer = document.createElement("div");
+    subcontainer.className = "levelcomplete";
+
+    const title = document.createElement("h2");
+    title.textContent = maps[this.currentMap][1];
+
+    const body = document.createElement("p");
+    body.textContent = maps[this.currentMap][2];
+
+    const button = document.createElement("button");
+    button.textContent = "Start";
+
+    button.onclick = () => {
+      ui.innerHTML = "";
+      ui.hidden = true;
+    };
+
+    subcontainer.appendChild(title);
+    subcontainer.appendChild(body);
+    subcontainer.appendChild(button);
+    ui.appendChild(subcontainer);
+  }
+
   public levelComplete() {
     const ui = document.getElementById('ui');
     ui.innerHTML = "";
@@ -273,9 +303,8 @@ export class Game extends Engine {
     button.onclick = () => {
       ui.innerHTML = "";
       ui.hidden = true;
-      this.postInit();
+      this.levelStart();
     };
-
 
     subcontainer.appendChild(winner);
     subcontainer.appendChild(button);

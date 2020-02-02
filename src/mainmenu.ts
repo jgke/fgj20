@@ -113,7 +113,7 @@ export class Mainmenu extends Scene {
 
   private startGame() {
     this.game.initMaps();
-    this.game.postInit();
+    this.game.levelStart();
   }
 
   private levelSelect() {

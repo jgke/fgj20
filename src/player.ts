@@ -32,14 +32,16 @@ export class Player extends Actor {
   update(engine: Game, delta: number) {
     super.update(engine, delta);
 
-    if (engine.input.keyboard.wasPressed(Input.Keys.Up)) {
-      this.queuedMovement = "Up";
-    } else if (engine.input.keyboard.wasPressed(Input.Keys.Down)) {
-      this.queuedMovement = "Down";
-    } else if (engine.input.keyboard.wasPressed(Input.Keys.Left)) {
-      this.queuedMovement = "Left";
-    } else if (engine.input.keyboard.wasPressed(Input.Keys.Right)) {
-      this.queuedMovement = "Right";
+    if (document.getElementById('ui').hidden) {
+      if (engine.input.keyboard.wasPressed(Input.Keys.Up)) {
+        this.queuedMovement = "Up";
+      } else if (engine.input.keyboard.wasPressed(Input.Keys.Down)) {
+        this.queuedMovement = "Down";
+      } else if (engine.input.keyboard.wasPressed(Input.Keys.Left)) {
+        this.queuedMovement = "Left";
+      } else if (engine.input.keyboard.wasPressed(Input.Keys.Right)) {
+        this.queuedMovement = "Right";
+      }
     }
 
     if (this.movingTo) {

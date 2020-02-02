@@ -199,8 +199,8 @@ const EndScreen = [
   [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
 ];
 
-export const maps: {[id: string]: [number[][], string]} = {
-  "00": [helloWorld, "Hello world!"],
+export const maps: {[id: string]: [number[][], string, string?]} = {
+  "00": [helloWorld, "Hello world!", "foobar"],
   "01": [introduction, "Introduction"],
   "02": [lifegoals, "Life goals"],
   "03": [orderMatters, "Order matters..."],
