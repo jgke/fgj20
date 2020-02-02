@@ -197,6 +197,24 @@ const roadout2 = [
   [2, 2, 0, 0, 2, 2, 2, 2,],
   [2, 2, 2, 2, 2, 0, 2, 2,],
   [2, 2, 2, 2, 2, 2, 2, 2,],
+]
+
+const roadout3 = [
+  [2,2,0,0,0,2,2,2,2,2,2,2,2,2,2],
+  [2,2,0,2,0,2,2,2,2,2,2,2,2,2,2],
+  [2,2,6,4,0,2,0,0,0,2,2,2,2,2,2],
+  [2,2,0,0,0,0,0,0,0,2,2,0,0,0,2],
+  [2,2,2,0,2,2,2,0,2,0,0,0,0,0,2],
+  [2,2,2,0,2,0,0,r,0,r,0,2,x,x,2],
+  [2,2,2,0,2,0,2,0,2,0,0,2,x,x,2],
+  [2,0,4,r,0,0,2,p,2,2,2,2,x,x,2],
+  [2,0,2,0,2,r,2,r,2,2,2,2,x,x,2],
+  [2,0,5,0,0,0,2,0,2,2,2,2,2,2,2],
+  [2,2,2,2,2,0,2,0,2,2,0,0,0,2,2],
+  [2,2,2,2,2,0,2,0,2,0,r,0,6,2,2],
+  [2,2,2,2,0,0,0,0,0,r,0,0,2,2,2],
+  [2,2,2,2,0,0,0,5,2,0,0,2,2,2,2],
+  [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
 ];
 
 const doubleRockTest = [
@@ -240,6 +258,7 @@ export const maps: {[id: string]: [number[][], string, string?, string?, string?
   "11": [pureban, "Dayjob", "You can't concentrate at work. The gig's all you can think about", "You've memorized all of the songs just in case", "crate"],
   "12": [familiar, "Somehow familiar", "Until you're reminded of something faintly familiar", "Super perplexing...", "crate"],
   "13": [Vinni, "Penthouse", "This is it! The final gig! The hall's going to be packed!", "What a tour! If only you got to play..."],
+  "14": [roadout3, "aoeu", "aoeu", "aoeu"],
   //"91": doubleRockTest,
   //"92": rockOnCableTest,
   //"99": [EndScreen, ""],
