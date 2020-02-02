@@ -58,6 +58,8 @@ export class Game extends Engine {
   assets = {
     player: new Texture('/assets/img/player.png'),
     rock: new Texture('/assets/img/chair.png'),
+    crate: new Texture('/assets/img/wood_box.png'),
+    box: new Texture('/assets/img/hard_box.png'),
     map: new Texture('/assets/img/map.png'),
     tileMap: new Texture('/assets/img/walls.png'),
     cables: new Texture('/assets/img/cables.png'),
@@ -326,7 +328,7 @@ export class Game extends Engine {
     this.addScene('mainmenu', new Mainmenu(this));
 
     return super.start(loader)
-    .then(() => this.goToScene('mainmenu'));
+      .then(() => this.goToScene('mainmenu'));
   }
 
   onPreUpdate(engine: Game, delta: number) {
