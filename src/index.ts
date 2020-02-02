@@ -80,7 +80,7 @@ export class Game extends Engine {
 
   public postInit() {
     this.currentMap = this.mapList.pop();
-    if (this.currentMap === undefined) {
+    if (!this.currentMap) {
       // your winner
       this.goToScene('mainmenu');
       return;
@@ -258,6 +258,9 @@ export class Game extends Engine {
 
   public levelStart() {
     this.postInit();
+    if (!this.currentMap) {
+      return;
+    }
 
     const ui = document.getElementById('ui');
     ui.innerHTML = "";
