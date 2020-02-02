@@ -62,7 +62,7 @@ export class Game extends Engine {
     box: new Texture('/assets/img/hard_box.png'),
     map: new Texture('/assets/img/map.png'),
     tileMap: new Texture('/assets/img/walls.png'),
-    cables: new Texture('/assets/img/cables.png'),
+    cables: new Texture('/assets/img/cable.png'),
     cross: new Texture('/assets/img/cross.png'),
   };
 
@@ -102,6 +102,8 @@ export class Game extends Engine {
     this.cables = new TileMap(0, 0, 2 * tileSize, 2 * tileSize, map.length, map[0].length);
     this.cables.registerSpriteSheet('base',
       new SpriteSheet(this.assets.map, 4, 3, 2 * tileSize, 2 * tileSize));
+    this.cables.registerSpriteSheet('cables',
+      new SpriteSheet(this.assets.cables, 6, 4, 2 * tileSize, 2 * tileSize));
 
     let playerPos = undefined;
 
@@ -168,7 +170,7 @@ export class Game extends Engine {
     this.goToScene(key);
   }
 
-  public getCell(x, y): Cell & { cable?: number, cableOrigin?: number } {
+  public getCell(x, y): Cell & { cable?: number, cableOrigin?: number, from?: Direction, to?: Direction } {
     return this.cables.getCell(x, y)
   }
 
@@ -192,13 +194,46 @@ export class Game extends Engine {
     }
   }
 
-  public setCabling(x: number, y: number, cabling?: number) {
+  public setCabling(x: number, y: number, cabling?: number, from?: Direction, to?: Direction) {
     this.getCell(x, y).clearSprites();
     if (cabling) {
       this.getCell(x, y).cable = cabling;
-      this.getCell(x, y).pushSprite(new TileSprite('base', cabling + 4));
+      this.getCell(x, y).from = from;
+      this.getCell(x, y).to = to;
+      this.getCell(x, y).pushSprite(new TileSprite('cables', {
+        "Up": {
+          undefined: 0,
+          "Up": 0,
+          "Right": 2,
+          "Down": 0,
+          "Left": 3,
+        },
+        "Right": {
+          undefined: 1,
+          "Up": 5,
+          "Right": 1,
+          "Down": 3,
+          "Left": 1,
+        },
+        "Down": {
+          undefined: 0,
+          "Up": 0,
+          "Right": 4,
+          "Down": 0,
+          "Left": 5,
+        },
+        "Left": {
+          undefined: 1,
+          "Up": 4,
+          "Right": 1,
+          "Down": 2,
+          "Left": 1,
+        },
+      }[from][to] + (cabling-4)*6));
     } else {
       this.getCell(x, y).cable = undefined;
+      this.getCell(x, y).from = undefined;
+      this.getCell(x, y).to = undefined;
       this.getCell(x, y).pushSprite(new TileSprite('base', 0));
     }
   }
@@ -236,7 +271,10 @@ export class Game extends Engine {
     }
 
     if (cabling && !this.getCell(dx, dy).cableOrigin && !this.getCell(dx, dy).cable) {
-      this.setCabling(dx, dy, cabling);
+      this.setCabling(dx, dy, cabling, to, undefined);
+      if (!this.getCell(cur.x, cur.y).cableOrigin) {
+        this.setCabling(cur.x, cur.y, cabling, this.getCell(cur.x, cur.y).from, to);
+      }
     } else if (cabling && this.getCell(dx, dy).cableOrigin === cabling && !cableOrigin.equals(destination)) {
       this.player.cabling = undefined;
       this.currentColors[cabling] = true;
@@ -326,6 +364,10 @@ export class Game extends Engine {
     ]);
 
     this.addScene('mainmenu', new Mainmenu(this));
+
+
+    this.mapList = ["13"];
+    return super.start(loader).then(() => this.levelStart());
 
     return super.start(loader)
       .then(() => this.goToScene('mainmenu'));
