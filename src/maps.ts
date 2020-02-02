@@ -201,7 +201,7 @@ const EndScreen = [
 
 export const maps: {[id: string]: [number[][], string, string?, string?, string?]} = {
   "00": [helloWorld, "Practicing at home", "You're playing guitar alone at home"],
-  "01": [introduction, "Band training", "The band's practicing in a cramped basement. The drummer flaked.", "rock"],
+  "01": [introduction, "Band training", "The band's practicing in a cramped basement. The drummer flaked."],
   "02": [lifegoals, "After hours", "The bassist had to go too. You do some rearranging and stay to practice."],
   "03": [orderMatters, "On tour!", "So apparently the bassist got you a new lead guitarist. And you're late for the gig. \"Everyone's the roadie\"..."],
   "04": [sokoban1, "Warehouse blues", "You're itching to play, but the rest of the band locked the door. You set up your guitar in some storage space."],
