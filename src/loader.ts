@@ -9,10 +9,6 @@ export class Splash extends Loader {
     this.backgroundColor = '#55555500';
   }
 
-  showPlayButton(): Promise<any> {
-    return Promise.resolve()
-  }
-
   public draw(ctx: CanvasRenderingContext2D) {
     const engine: Engine = (this as any)._engine;
     let canvasHeight = engine.canvasHeight / window.devicePixelRatio;
