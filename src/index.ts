@@ -276,6 +276,9 @@ export class Game extends Engine {
         this.setCabling(cur.x, cur.y, cabling, this.getCell(cur.x, cur.y).from, to);
       }
     } else if (cabling && this.getCell(dx, dy).cableOrigin === cabling && !cableOrigin.equals(destination)) {
+      if (!this.getCell(cur.x, cur.y).cableOrigin) {
+        this.setCabling(cur.x, cur.y, cabling, this.getCell(cur.x, cur.y).from, to);
+      }
       this.player.cabling = undefined;
       this.currentColors[cabling] = true;
       if (this.isComplete()) {
