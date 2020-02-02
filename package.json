@@ -7,7 +7,7 @@
     "build": "webpack --config webpack.dev.js && rm -rf public && mkdir -p public/build && cp -r assets public && cp dist/* public",
     "build-prod": "rm -rf public && webpack --config webpack.prod.js && cp -r assets public && cp dist/index.html public && cp dist/CNAME public && cp dist/favicon.png public",
     "distribute": "npm run distzip && cd public && surge",
-    "distzip": "npm run build-prod && rm -f kaikkiroudaa.zip && zip kaikkiroudaa.zip -r public",
+    "distzip": "npm run build-prod && rm -f kaikkiroudaa.zip && rm -rf tmp && mkdir -p tmp/source && cp -R public tmp/release && cp -R src assets webpack.* package.json tsconfig.json README.md tmp/source && cp -R press license.txt tmp && (cd tmp && zip ../kaikkiroudaa.zip -r *)",
     "start": "npm run build && webpack-dev-server --open --config webpack.dev.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

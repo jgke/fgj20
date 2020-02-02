@@ -26,11 +26,7 @@ export class Player extends Actor {
 
     engine.input.pointers.primary.on("down", (pe: any) => {
       try {
-        console.log(pe);
         const coordinates = pe.coordinates.screenPos;
-        console.log(coordinates);
-        console.log(engine.canvasHeight, engine.canvasWidth);
-        console.log(engine.drawWidth, engine.drawWidth);
         if (coordinates.x > engine.drawWidth / 3 && coordinates.x < 2 * engine.drawWidth / 3) {
           if (coordinates.y < engine.drawHeight / 3) {
             this.queuedMovement = "Up";

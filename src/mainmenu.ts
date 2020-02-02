@@ -61,10 +61,10 @@ export class Mainmenu extends Scene {
       subcontainer.className = "subcontainer";
       const subsubcontainer = document.createElement('div');
       const creators = [
-        'enrik Hillner',
-        'Jaakko Hannikainen',
+        'aakko Hannikainen',
+        'Henrik Hillner',
         'Jani Suutarinen',
-        'Susanna Rantakylä H'];
+        'Susanna Rantakylä J'];
       const text = ' ' + creators.join(' ') + ' ';
       const elem = document.createElement("h2");
       subsubcontainer.className = "rotate";
