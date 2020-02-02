@@ -39,6 +39,7 @@ export class Mainmenu extends Scene {
         const elem = document.createElement("button");
         elem.textContent = str;
         elem.onclick = () => cb();
+        elem.ontouchstart = () => cb();
         elem.onmouseover = () => {
           this.focused = index;
           elem.focus();
@@ -112,6 +113,7 @@ export class Mainmenu extends Scene {
   }
 
   private startGame() {
+    console.log("Starting game")
     this.game.initMaps();
     this.game.levelStart();
   }
@@ -135,6 +137,10 @@ export class Mainmenu extends Scene {
       const elem = document.createElement("button");
       elem.textContent = `${id} ${maps[id][1]}`;
       elem.onclick = () => {
+        this.game.mapList = [id];
+        this.game.levelStart();
+      };
+      elem.ontouchstart = () => {
         this.game.mapList = [id];
         this.game.levelStart();
       };

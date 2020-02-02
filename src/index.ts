@@ -161,7 +161,7 @@ export class Game extends Engine {
     gameScene.add(this.tileMap);
     gameScene.add(this.cables);
 
-    this.player = new Player(new Vector(playerPos.x, playerPos.y), this.assets.player);
+    this.player = new Player(this, new Vector(playerPos.x, playerPos.y), this.assets.player);
     for (let y = 0; y < map.length; y++) {
       for (let x = 0; x < map[0].length; x++) {
         if (map[y][x] === -1) {
@@ -340,6 +340,11 @@ export class Game extends Engine {
       ui.hidden = true;
     };
 
+    button.ontouchstart = () => {
+      ui.innerHTML = "";
+      ui.hidden = true;
+    };
+
     subcontainer.appendChild(title);
     subcontainer.appendChild(body);
     subcontainer.appendChild(button);
@@ -364,6 +369,12 @@ export class Game extends Engine {
     button.textContent = "Continue";
 
     button.onclick = () => {
+      ui.innerHTML = "";
+      ui.hidden = true;
+      this.levelStart();
+    };
+
+    button.ontouchstart = () => {
       ui.innerHTML = "";
       ui.hidden = true;
       this.levelStart();

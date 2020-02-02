@@ -1,4 +1,4 @@
-import {Actor, CollisionType, Engine, Input, Texture, TileMap, Vector} from 'excalibur';
+import {Actor, Engine, Input, Texture, Vector} from 'excalibur';
 
 import {Game} from './.';
 import {tileSize} from "./const";
@@ -15,6 +15,7 @@ export class Player extends Actor {
   queuedMovement?: Direction;
 
   constructor(
+    engine: Game,
     initPos: Vector,
     texture: Texture,
   ) {
@@ -22,6 +23,30 @@ export class Player extends Actor {
 
     this.previousDirection = Vector.Right;
     this.texture = texture;
+
+    engine.input.pointers.primary.on("down", (pe: any) => {
+      try {
+        console.log(pe);
+        const coordinates = pe.coordinates.screenPos;
+        console.log(coordinates);
+        console.log(engine.canvasHeight, engine.canvasWidth);
+        if (coordinates.x > engine.canvasWidth / 3 && coordinates.x < 2 * engine.canvasWidth / 3) {
+          if (coordinates.y < engine.canvasHeight / 3) {
+            this.queuedMovement = "Up";
+          } else if (coordinates.y > 2 * engine.canvasHeight / 3) {
+            this.queuedMovement = "Down";
+          }
+        } else if (coordinates.y > engine.canvasHeight / 3 && coordinates.y < 2 * engine.canvasHeight / 3) {
+          if (coordinates.x < engine.canvasWidth / 3) {
+            this.queuedMovement = "Left";
+          } else if (coordinates.x > 2 * engine.canvasWidth / 3) {
+            this.queuedMovement = "Right";
+          }
+        }
+      } catch(e) {
+        console.log(e)
+      }
+    });
   }
 
   onInitialize(game: Engine) {
@@ -44,7 +69,7 @@ export class Player extends Actor {
     }
 
     if (this.movingTo) {
-      if(this.queuedMovement) {
+      if (this.queuedMovement) {
         this.pos = this.movingTo;
         this.movingTo = undefined;
       } else {
