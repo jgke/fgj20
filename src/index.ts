@@ -337,9 +337,9 @@ export class Game extends Engine {
     if (!(this.currentScene instanceof Mainmenu)) {
       if (engine.input.keyboard.wasPressed(Input.Keys.R)) {
         this.mapList.push(this.currentMap);
-        this.postInit();
+        this.levelStart();
       } else if (engine.input.keyboard.wasPressed(Input.Keys.N)) {
-        this.postInit();
+        this.levelStart();
       }
     }
   }
