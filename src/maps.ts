@@ -252,7 +252,7 @@ export const maps: {[id: string]: [number[][], string, string?, string?, string?
   "05": [sokoban1, "Warehouse blues", "You're itching to play, but the rest of the band locked the door. You set up your guitar in some storage space.", "Wonder what the guys were giggling about in there...", "crate"],
   "06": [sokoban2, "Blind trial", "You take a side job for a scientific study on telepathic guitarists playing in time. One of them looks like a bassist, though.", "Wow, they really are in time!", "box"],
   "07": [sokoban3, "Dancehall", "You get to arrange the seating now, too!", "You feel useful."],
-  "08": [roadout3, "Paid professional", "The client: \"Oh, you're still here. Would you mind hooking up the sound system so we can play something off my phone?", "You feel absolutely indispensable to your band and your clientele."]
+  "08": [roadout3, "Paid professional", "The client: \"Oh, you're still here. Would you mind hooking up the sound system so we can play something off my phone?", "You feel absolutely indispensable to your band and your clientele."],
   "09": [alone3, "Warehouse swing", "Tidying up for another gig, you have a minute to practice.", "\"Nobody knows the trouble I've seen\"...", "crate"],
   "10": [sokobanStar, "Wedding gig", "The band's a surprise. You're running the cables discreetly.", "The bride was in tears! You have something in your eye, too.", "crate"],
   "11": [roadout2, "Unforgettable", "Weddings always make you so emotional", "You just can't get the view of them playing out of your mind", "box"],
