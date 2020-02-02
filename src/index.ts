@@ -1,4 +1,17 @@
-import {Actor, Cell, Color, Engine, Input, Scene, SpriteSheet, Texture, TileMap, TileSprite, Vector} from 'excalibur';
+import {
+  Actor,
+  Cell,
+  Color,
+  Engine,
+  Input,
+  Scene,
+  Sound,
+  SpriteSheet,
+  Texture,
+  TileMap,
+  TileSprite,
+  Vector
+} from 'excalibur';
 import {Splash} from "./loader";
 import {Player} from "./player";
 import {Rock} from "./rock";
@@ -64,6 +77,7 @@ export class Game extends Engine {
     tileMap: new Texture('/assets/img/walls.png'),
     cables: new Texture('/assets/img/cable.png'),
     cross: new Texture('/assets/img/cross.png'),
+    music: new Sound('/assets/fgj20.ogg'),
   };
 
   constructor() {
@@ -125,9 +139,9 @@ export class Game extends Engine {
         this.getCell(x, y).pushSprite(ts);
         this.getCell(x, y).solid = map[y][x] === 2;
         this.getCell(x, y).cable = undefined;
-        if (map[y][x] >= 4 && map[y][x] < 8) {
-          this.targetColors.push(map[y][x]);
-          this.getCell(x, y).cableOrigin = map[y][x];
+        if (map[y][x] >= 4) {
+          this.targetColors.push(map[y][x] % 4 + 4);
+          this.getCell(x, y).cableOrigin = map[y][x] % 4 + 4;
         }
       }
     }
@@ -369,7 +383,11 @@ export class Game extends Engine {
     this.addScene('mainmenu', new Mainmenu(this));
 
     return super.start(loader)
-      .then(() => this.goToScene('mainmenu'));
+      .then(() => {
+        this.assets.music.play();
+        this.assets.music.loop = true;
+        this.goToScene('mainmenu')
+      });
   }
 
   onPreUpdate(engine: Game, delta: number) {

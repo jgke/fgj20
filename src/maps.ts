@@ -9,7 +9,7 @@ const helloWorld = [
   [2, 2, 2, 4, 2, 2, 2],
   [2, 2, p, 0, 0, 2, 2],
   [2, 2, 0, 0, 0, 2, 2],
-  [2, 2, 2, 4, 2, 2, 2],
+  [2, 2, 2, 8, 2, 2, 2],
   [2, 2, 2, 2, 2, 2, 2],
 ];
 
@@ -245,7 +245,7 @@ const EndScreen = [
 
 export const maps: {[id: string]: [number[][], string, string?, string?, string?]} = {
   "00": [helloWorld, "Practicing at home", "You're playing guitar alone at home. Connect the red squares.", "You're so stoked you got in a band!"],
-  "01": [introduction, "Band training", "The band's practicing in a cramped basement. The drummer flaked. Connect each color.", "bassist: \"I have to see a man about a dog.\"", "box"],
+  "01": [introduction, "Band training", "The band's practicing in a cramped basement. The drummer flaked. Connect each color without crossing lines.", "bassist: \"I have to see a man about a dog.\"", "box"],
   "02": [lifegoals, "After hours", "The bassist had to go too. You do some rearranging and stay to practice. Move the box onto the X.", "Big day next weekend!", "box"],
   "03": [orderMatters, "On tour!", "So apparently the bassist got you a new lead guitarist. And you're late for the gig. bassist: \"Everyone's the roadie\"... Do not cross the streams! Press r to restart.", "Just look at them go!", "box"],
   "04": [roadout, "After the gig", "They broke a leg! Looks like you're everyone again, get the stuff in the van", "Can't wait to get to the hotel for a beer with the crew!", "box"],
