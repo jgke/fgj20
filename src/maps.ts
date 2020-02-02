@@ -227,12 +227,12 @@ const EndScreen = [
 
 export const maps: {[id: string]: [number[][], string, string?, string?, string?]} = {
   "00": [helloWorld, "Practicing at home", "You're playing guitar alone at home. Connect the red squares.", "You're so stoked you got in a band!"],
-  "01": [introduction, "Band training", "The band's practicing in a cramped basement. The drummer flaked. Connect each color.", "bassist: \"I have to see a man about a dog.\""],
+  "01": [introduction, "Band training", "The band's practicing in a cramped basement. The drummer flaked. Connect each color.", "bassist: \"I have to see a man about a dog.\"", "box"],
   "02": [lifegoals, "After hours", "The bassist had to go too. You do some rearranging and stay to practice. Move the box onto the X.", "Big day next weekend!", "box"],
-  "03": [orderMatters, "On tour!", "So apparently the bassist got you a new lead guitarist. And you're late for the gig. bassist: \"Everyone's the roadie\"... Do not cross the streams!", "Just look at them go!"],
+  "03": [orderMatters, "On tour!", "So apparently the bassist got you a new lead guitarist. And you're late for the gig. bassist: \"Everyone's the roadie\"... Do not cross the streams! Press r to restart.", "Just look at them go!", "box"],
   "04": [roadout, "After the gig", "They broke a leg! Looks like you're everyone again, get the stuff in the van", "Can't wait to get to the hotel for a beer with the crew!", "box"],
   "05": [sokoban1, "Warehouse blues", "You're itching to play, but the rest of the band locked the door. You set up your guitar in some storage space.", "Wonder what the guys were giggling about in there...", "crate"],
-  "06": [sokoban2, "Blind trial", "You take a side job for a scientific study on telepathic guitarists playing in time. One of them looks like a bassist, though.", "Wow, they really are in time!", "crate"],
+  "06": [sokoban2, "Blind trial", "You take a side job for a scientific study on telepathic guitarists playing in time. One of them looks like a bassist, though.", "Wow, they really are in time!", "box"],
   "07": [sokoban3, "Dancehall", "You get to arrange the seating now, too!", "You feel useful."],
   "08": [alone3, "Warehouse swing", "Tidying up for another gig, you have a minute to practice.", "\"Nobody knows the trouble I've seen\"...", "crate"],
   "09": [sokobanStar, "Wedding gig", "The band's a surprise. You're running the cables discreetly.", "The bride was in tears! You have something in your eye, too.", "crate"],
