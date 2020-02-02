@@ -115,7 +115,7 @@ export class Game extends Engine {
 
     this.cables = new TileMap(0, 0, 2 * tileSize, 2 * tileSize, map.length, map[0].length);
     this.cables.registerSpriteSheet('base',
-      new SpriteSheet(this.assets.map, 4, 3, 2 * tileSize, 2 * tileSize));
+      new SpriteSheet(this.assets.map, 4, 4, 2 * tileSize, 2 * tileSize));
     this.cables.registerSpriteSheet('cables',
       new SpriteSheet(this.assets.cables, 6, 4, 2 * tileSize, 2 * tileSize));
 
