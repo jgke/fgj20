@@ -147,7 +147,7 @@ export class Game extends Engine {
     for (let y = 0; y < map.length; y++) {
       for (let x = 0; x < map[0].length; x++) {
         if (map[y][x] === -1) {
-          const rock = new Rock(new Vector(x, y), this.assets.rock);
+          const rock = new Rock(new Vector(x, y), this.assets[maps[this.currentMap][3] || "rock"]);
           this.rocks.push(rock);
           gameScene.add(rock);
         }
