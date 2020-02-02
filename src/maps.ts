@@ -173,6 +173,19 @@ const Vinni =  [
   [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
 ]
 
+const roadout = [
+  [2, 2, 2, 0, 0, 0, 2, 2, 2, 2,],
+  [2, 2, 2, 0, r, 0, 2, 2, 2, 2,],
+  [p, 2, 2, 0, 0, 0, 2, 2, 2, 2,],
+  [0, 2, 2, r, 2, 2, 2, 0, 0, 0,],
+  [0, r, 0, 0, r, 0, x, x, x, 0,],
+  [0, 2, 0, 0, 0, 2, x, x, x, 2,],
+  [0, 2, 0, 2, 0, 2, 2, 2, 2, 2,],
+  [0, r, 0, 0, 0, 0, 0, 2, 2, 2,],
+  [2, 0, 0, 2, 2, r, 0, 2, 2, 2,],
+  [2, 2, 2, 2, 2, 0, 0, 2, 2, 2,],
+];
+
 const doubleRockTest = [
   [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
   [2, 4, p, 0, 0, r, 4, 0, 0, 2],
@@ -216,5 +229,6 @@ export const maps: {[id: string]: [number[][], string, string?, string?, string?
   //"92": rockOnCableTest,
   //"99": [EndScreen, ""],
 };
+//"03.1": [roadout, "After the gig", "After playing, you know what is ahead: moving stuff back to the car."],
 
 export const mapOrder = Object.keys(maps).sort().reverse();
