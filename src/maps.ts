@@ -236,7 +236,7 @@ export const maps: {[id: string]: [number[][], string, string?, string?, string?
   "07": [sokoban3, "Dancehall", "You get to arrange the seating now, too!", "You feel useful."],
   "08": [alone3, "Warehouse swing", "Tidying up for another gig, you have a minute to practice.", "\"Nobody knows the trouble I've seen\"...", "crate"],
   "09": [sokobanStar, "Wedding gig", "The band's a surprise. You're running the cables discreetly.", "The bride was in tears! You have something in your eye, too.", "crate"],
-  "10": [roadout2, "Unforgettable", "Weddings always make you so emotional", "You just can't get the view of them playing out of your mind", "box"]
+  "10": [roadout2, "Unforgettable", "Weddings always make you so emotional", "You just can't get the view of them playing out of your mind", "box"],
   "11": [pureban, "Dayjob", "You can't concentrate at work. The gig's all you can think about", "You've memorized all of the songs just in case", "crate"],
   "12": [familiar, "Somehow familiar", "Until you're reminded of something faintly familiar", "Super perplexing...", "crate"],
   "13": [Vinni, "Penthouse", "This is it! The final gig! The hall's going to be packed!", "What a tour! If only you got to play..."],
